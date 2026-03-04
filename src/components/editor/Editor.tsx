@@ -4,16 +4,14 @@ import { LexicalComposer, type InitialConfigType } from "@lexical/react/LexicalC
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-
-import ToolbarPlugin from "./plugins/ToolbarPlugin";
-
+import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
 import "./Editor.css";
 
 import theme from "@/components/editor/EditorTheme";
 
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import OnChangePlugin from "./plugins/OnChangePlugin";
 
 const placeholder = "Enter some rich text...";
 
@@ -43,9 +41,9 @@ export default function Editor() {
             }
             ErrorBoundary={LexicalErrorBoundary}
           />
-          <HistoryPlugin />
           <AutoFocusPlugin />
           <ToolbarPlugin />
+          <OnChangePlugin />
         </div>
       </div>
     </LexicalComposer>
