@@ -13,7 +13,7 @@ export default function Button({ active = true, children, ...props }: ButtonProp
       {...restProps}
       className={cn(
         className,
-        "p-1.5 rounded-xl shadow-xl",
+        "p-1 rounded-xl shadow-xl",
         active ? "opacity-100" : "opacity-30",
       )}
     >

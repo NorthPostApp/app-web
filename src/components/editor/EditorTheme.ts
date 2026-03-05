@@ -5,5 +5,6 @@ export default {
     bold: "editor-text-bold",
     underline: "editor-text-underline",
     strikethrough: "editor-text-strikethrough",
+    underlineStrikethrough: "editor-text-underlineStrikethrough",
   },
 };

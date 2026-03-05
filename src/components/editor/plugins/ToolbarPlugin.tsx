@@ -1,46 +1,111 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import Button from "@/components/ui/Button";
-import { Bold, Italic, Underline, Strikethrough } from "lucide-react";
+import {
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  TextAlignCenter,
+  TextAlignStart,
+  TextAlignEnd,
+} from "lucide-react";
 import {
   $getSelection,
   $isRangeSelection,
+  $isElementNode,
+  FORMAT_ELEMENT_COMMAND,
   FORMAT_TEXT_COMMAND,
   mergeRegister,
+  ElementNode,
+  type ElementFormatType,
 } from "lexical";
 import { useCallback, useEffect, useState } from "react";
+import {
+  SUPPORTED_ELEMENT_FORMATS,
+  SUPPORTED_TEXT_FORMATS,
+  TOOLBAR_BUTTON_SIZE,
+} from "../editor-config";
+import { Separator } from "@base-ui/react";
 
 type ToolbarStatus = {
   bold: boolean;
   italic: boolean;
   underline: boolean;
-  strikeThrough: boolean;
+  strikethrough: boolean;
+  center: boolean;
+  left: boolean;
+  right: boolean;
 };
 
 const initToolbarStatus: ToolbarStatus = {
   bold: false,
   italic: false,
   underline: false,
-  strikeThrough: false,
+  strikethrough: false,
+  center: false,
+  left: false,
+  right: false,
 };
 
-const TOOLBAR_BUTTON_SIZE = 20;
+const getIcon = (format: keyof ToolbarStatus) => {
+  const size = TOOLBAR_BUTTON_SIZE;
+  switch (format) {
+    case "bold":
+      return <Bold size={size} />;
+    case "italic":
+      return <Italic size={size} />;
+    case "underline":
+      return <Underline size={size} />;
+    case "strikethrough":
+      return <Strikethrough size={size} />;
+    case "center":
+      return <TextAlignCenter size={size} />;
+    case "left":
+      return <TextAlignStart size={size} />;
+    case "right":
+      return <TextAlignEnd size={size} />;
+    default:
+      return null;
+  }
+};
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
-  // we need to put all of the states into a single object, to avoid
-  // multiple re-renderings
   const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatus>(initToolbarStatus);
+  const getStatus = (option: string) => {
+    if (option in toolbarStatus) {
+      return toolbarStatus[option as keyof ToolbarStatus];
+    }
+    return false;
+  };
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
+
     if ($isRangeSelection(selection)) {
+      const anchorNode = selection.anchor.getNode();
+      const element =
+        anchorNode.getKey() === "root"
+          ? anchorNode
+          : $isElementNode(anchorNode)
+            ? anchorNode
+            : anchorNode.getParent();
+
+      let alignment: ElementFormatType;
+      if (element instanceof ElementNode) {
+        alignment = element.getFormatType();
+      }
+
       setToolbarStatus((prev) => {
         return {
           ...prev,
           bold: selection.hasFormat("bold"),
           italic: selection.hasFormat("italic"),
           underline: selection.hasFormat("underline"),
-          strikeThrough: selection.hasFormat("strikethrough"),
+          strikethrough: selection.hasFormat("strikethrough"),
+          center: alignment === "center",
+          left: alignment === "left",
+          right: alignment === "right",
         };
       });
     }
@@ -61,38 +126,35 @@ export default function ToolbarPlugin() {
 
   return (
     <div className="toolbar">
-      <Button
-        active={toolbarStatus.bold}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-        }}
-      >
-        <Bold size={TOOLBAR_BUTTON_SIZE} />
-      </Button>
-      <Button
-        active={toolbarStatus.italic}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-        }}
-      >
-        <Italic size={TOOLBAR_BUTTON_SIZE} />
-      </Button>
-      <Button
-        active={toolbarStatus.underline}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-        }}
-      >
-        <Underline size={TOOLBAR_BUTTON_SIZE} />
-      </Button>
-      <Button
-        active={toolbarStatus.strikeThrough}
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-        }}
-      >
-        <Strikethrough size={TOOLBAR_BUTTON_SIZE} />
-      </Button>
+      <div>
+        {SUPPORTED_TEXT_FORMATS.map((format) => (
+          <Button
+            key={format}
+            active={getStatus(format)}
+            onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
+          >
+            {getIcon(format as keyof ToolbarStatus)}
+          </Button>
+        ))}
+      </div>
+      <Separator orientation="vertical" className="w-px bg-gray-600" />
+      <div>
+        {SUPPORTED_ELEMENT_FORMATS.map((format) => (
+          <Button
+            key={format}
+            active={getStatus(format)}
+            onClick={() => {
+              if (getStatus(format)) {
+                editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "");
+              } else {
+                editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, format);
+              }
+            }}
+          >
+            {getIcon(format as keyof ToolbarStatus)}
+          </Button>
+        ))}
+      </div>
     </div>
   );
 }
