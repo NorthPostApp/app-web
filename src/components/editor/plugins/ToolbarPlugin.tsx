@@ -1,16 +1,6 @@
+import { useCallback, useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import Button from "@/components/ui/Button";
-import {
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  TextAlignCenter,
-  TextAlignStart,
-  TextAlignEnd,
-  Heading1,
-  List,
-} from "lucide-react";
 import {
   $getSelection,
   $isRangeSelection,
@@ -22,73 +12,31 @@ import {
   type ElementFormatType,
   $createParagraphNode,
 } from "lexical";
-import {
-  $createHeadingNode,
-  $isHeadingNode,
-  type HeadingTagType,
-} from "@lexical/rich-text";
+import { $createHeadingNode, $isHeadingNode } from "@lexical/rich-text";
 import {
   $isListItemNode,
   $isListNode,
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
-  type ListType,
 } from "@lexical/list";
 import { $setBlocksType } from "@lexical/selection";
-import { useCallback, useEffect, useState } from "react";
-import {
-  SUPPORTED_ELEMENT_FORMATS,
-  SUPPORTED_TEXT_FORMATS,
-  TOOLBAR_BUTTON_SIZE,
-} from "../editor-config";
+import { SUPPORTED_ELEMENT_FORMATS, SUPPORTED_TEXT_FORMATS } from "../editor-config";
 import { Separator } from "@base-ui/react";
-
-type ToolbarStatus = {
-  bold: boolean;
-  italic: boolean;
-  underline: boolean;
-  strikethrough: boolean;
-  elementFormat: ElementFormatType;
-  blockType: ListType | HeadingTagType | "paragraph";
-};
-
-const initToolbarStatus: ToolbarStatus = {
-  bold: false,
-  italic: false,
-  underline: false,
-  strikethrough: false,
-  elementFormat: "",
-  blockType: "paragraph",
-};
-
-const getIcon = (format: string) => {
-  const size = TOOLBAR_BUTTON_SIZE;
-  switch (format) {
-    case "bold":
-      return <Bold size={size} />;
-    case "italic":
-      return <Italic size={size} />;
-    case "underline":
-      return <Underline size={size} />;
-    case "strikethrough":
-      return <Strikethrough size={size} />;
-    case "center":
-      return <TextAlignCenter size={size} />;
-    case "left":
-      return <TextAlignStart size={size} />;
-    case "right":
-      return <TextAlignEnd size={size} />;
-    default:
-      return null;
-  }
-};
+import { useAtom } from "jotai";
+import {
+  derivedToolbarStatusAtom,
+  type BlockType,
+  type ToolbarStatusType,
+} from "@/atoms/editorAtoms";
+import ToolbarIcon from "./ToolbarIcon";
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
-  const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatus>(initToolbarStatus);
+  const [toolbarStatus, writeToolbarStatus] = useAtom(derivedToolbarStatusAtom);
+
   const getStatus = (option: string, target?: string) => {
     if (option in toolbarStatus) {
-      const value = toolbarStatus[option as keyof ToolbarStatus];
+      const value = toolbarStatus[option as keyof ToolbarStatusType];
       if (typeof value === "boolean") {
         return value;
       } else {
@@ -110,31 +58,21 @@ export default function ToolbarPlugin() {
             ? anchorNode
             : anchorNode.getParent();
 
-      let format: ElementFormatType;
+      let format: ElementFormatType = "";
       if (element instanceof ElementNode) {
         format = element.getFormatType();
       }
 
-      let blockType: ToolbarStatus["blockType"] = "paragraph";
+      let blockType: BlockType = "paragraph";
       if ($isHeadingNode(element)) {
         blockType = element.getTag() as "h1" | "h2" | "h3";
       } else if ($isListItemNode(element)) {
         const parentList = element.getParent();
         if ($isListNode(parentList)) blockType = parentList.getListType();
       }
-      setToolbarStatus((prev) => {
-        return {
-          ...prev,
-          bold: selection.hasFormat("bold"),
-          italic: selection.hasFormat("italic"),
-          underline: selection.hasFormat("underline"),
-          strikethrough: selection.hasFormat("strikethrough"),
-          elementFormat: format,
-          blockType,
-        };
-      });
+      writeToolbarStatus(selection, format, blockType);
     }
-  }, []);
+  }, [writeToolbarStatus]);
 
   useEffect(() => {
     return mergeRegister(
@@ -158,7 +96,7 @@ export default function ToolbarPlugin() {
             active={getStatus(format)}
             onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
           >
-            {getIcon(format as keyof ToolbarStatus)}
+            <ToolbarIcon name={format} />
           </Button>
         ))}
       </div>
@@ -176,7 +114,7 @@ export default function ToolbarPlugin() {
               }
             }}
           >
-            {getIcon(format as keyof ToolbarStatus)}
+            <ToolbarIcon name={format} />
           </Button>
         ))}
       </div>
@@ -197,7 +135,7 @@ export default function ToolbarPlugin() {
           });
         }}
       >
-        <Heading1 />
+        <ToolbarIcon name={"h1"} />
       </Button>
       <Button
         active={getStatus("blockType", "bullet")}
@@ -209,7 +147,7 @@ export default function ToolbarPlugin() {
           }
         }}
       >
-        <List />
+        <ToolbarIcon name="bullet" />
       </Button>
     </div>
   );
