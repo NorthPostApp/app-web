@@ -8,9 +8,12 @@ import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
 import "./Editor.css";
 
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
+
 import theme from "@/components/editor/EditorTheme";
 
-import { HeadingNode, QuoteNode } from "@lexical/rich-text";
+import { HeadingNode } from "@lexical/rich-text";
+import { ListNode, ListItemNode } from "@lexical/list";
 import OnChangePlugin from "./plugins/OnChangePlugin";
 
 const placeholder = "Enter some rich text...";
@@ -22,7 +25,7 @@ const onError = (error: Error) => {
 export default function Editor() {
   const initialConfig: InitialConfigType = {
     namespace: "LetterEditor",
-    nodes: [HeadingNode, QuoteNode],
+    nodes: [HeadingNode, ListNode, ListItemNode],
     onError,
     theme,
   };
@@ -44,6 +47,7 @@ export default function Editor() {
           <AutoFocusPlugin />
           <ToolbarPlugin />
           <OnChangePlugin />
+          <ListPlugin />
         </div>
       </div>
     </LexicalComposer>

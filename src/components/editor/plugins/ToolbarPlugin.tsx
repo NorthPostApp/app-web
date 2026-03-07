@@ -1,14 +1,6 @@
+import { useCallback, useEffect } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import Button from "@/components/ui/Button";
-import {
-  Bold,
-  Italic,
-  Underline,
-  Strikethrough,
-  TextAlignCenter,
-  TextAlignStart,
-  TextAlignEnd,
-} from "lucide-react";
 import {
   $getSelection,
   $isRangeSelection,
@@ -18,63 +10,38 @@ import {
   mergeRegister,
   ElementNode,
   type ElementFormatType,
+  $createParagraphNode,
 } from "lexical";
-import { useCallback, useEffect, useState } from "react";
+import { $createHeadingNode, $isHeadingNode } from "@lexical/rich-text";
 import {
-  SUPPORTED_ELEMENT_FORMATS,
-  SUPPORTED_TEXT_FORMATS,
-  TOOLBAR_BUTTON_SIZE,
-} from "../editor-config";
+  $isListItemNode,
+  $isListNode,
+  INSERT_UNORDERED_LIST_COMMAND,
+  REMOVE_LIST_COMMAND,
+} from "@lexical/list";
+import { $setBlocksType } from "@lexical/selection";
+import { SUPPORTED_ELEMENT_FORMATS, SUPPORTED_TEXT_FORMATS } from "../editor-config";
 import { Separator } from "@base-ui/react";
-
-type ToolbarStatus = {
-  bold: boolean;
-  italic: boolean;
-  underline: boolean;
-  strikethrough: boolean;
-  center: boolean;
-  left: boolean;
-  right: boolean;
-};
-
-const initToolbarStatus: ToolbarStatus = {
-  bold: false,
-  italic: false,
-  underline: false,
-  strikethrough: false,
-  center: false,
-  left: false,
-  right: false,
-};
-
-const getIcon = (format: keyof ToolbarStatus) => {
-  const size = TOOLBAR_BUTTON_SIZE;
-  switch (format) {
-    case "bold":
-      return <Bold size={size} />;
-    case "italic":
-      return <Italic size={size} />;
-    case "underline":
-      return <Underline size={size} />;
-    case "strikethrough":
-      return <Strikethrough size={size} />;
-    case "center":
-      return <TextAlignCenter size={size} />;
-    case "left":
-      return <TextAlignStart size={size} />;
-    case "right":
-      return <TextAlignEnd size={size} />;
-    default:
-      return null;
-  }
-};
+import { useAtom } from "jotai";
+import {
+  derivedToolbarStatusAtom,
+  type BlockType,
+  type ToolbarStatusType,
+} from "@/atoms/editorAtoms";
+import ToolbarIcon from "./ToolbarIcon";
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
-  const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatus>(initToolbarStatus);
-  const getStatus = (option: string) => {
+  const [toolbarStatus, writeToolbarStatus] = useAtom(derivedToolbarStatusAtom);
+
+  const getStatus = (option: string, target?: string) => {
     if (option in toolbarStatus) {
-      return toolbarStatus[option as keyof ToolbarStatus];
+      const value = toolbarStatus[option as keyof ToolbarStatusType];
+      if (typeof value === "boolean") {
+        return value;
+      } else {
+        return value === target;
+      }
     }
     return false;
   };
@@ -91,25 +58,21 @@ export default function ToolbarPlugin() {
             ? anchorNode
             : anchorNode.getParent();
 
-      let alignment: ElementFormatType;
+      let format: ElementFormatType = "";
       if (element instanceof ElementNode) {
-        alignment = element.getFormatType();
+        format = element.getFormatType();
       }
 
-      setToolbarStatus((prev) => {
-        return {
-          ...prev,
-          bold: selection.hasFormat("bold"),
-          italic: selection.hasFormat("italic"),
-          underline: selection.hasFormat("underline"),
-          strikethrough: selection.hasFormat("strikethrough"),
-          center: alignment === "center",
-          left: alignment === "left",
-          right: alignment === "right",
-        };
-      });
+      let blockType: BlockType = "paragraph";
+      if ($isHeadingNode(element)) {
+        blockType = element.getTag() as "h1" | "h2" | "h3";
+      } else if ($isListItemNode(element)) {
+        const parentList = element.getParent();
+        if ($isListNode(parentList)) blockType = parentList.getListType();
+      }
+      writeToolbarStatus(selection, format, blockType);
     }
-  }, []);
+  }, [writeToolbarStatus]);
 
   useEffect(() => {
     return mergeRegister(
@@ -133,7 +96,7 @@ export default function ToolbarPlugin() {
             active={getStatus(format)}
             onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
           >
-            {getIcon(format as keyof ToolbarStatus)}
+            <ToolbarIcon name={format} />
           </Button>
         ))}
       </div>
@@ -142,19 +105,50 @@ export default function ToolbarPlugin() {
         {SUPPORTED_ELEMENT_FORMATS.map((format) => (
           <Button
             key={format}
-            active={getStatus(format)}
+            active={getStatus("elementFormat", format)}
             onClick={() => {
-              if (getStatus(format)) {
+              if (getStatus("elementFormat", format)) {
                 editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "");
               } else {
                 editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, format);
               }
             }}
           >
-            {getIcon(format as keyof ToolbarStatus)}
+            <ToolbarIcon name={format} />
           </Button>
         ))}
       </div>
+
+      <Separator orientation="vertical" className="w-px bg-gray-600" />
+      <Button
+        active={getStatus("blockType", "h1")}
+        onClick={() => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              if (getStatus("blockType", "h1")) {
+                $setBlocksType(selection, () => $createParagraphNode());
+              } else {
+                $setBlocksType(selection, () => $createHeadingNode("h1"));
+              }
+            }
+          });
+        }}
+      >
+        <ToolbarIcon name={"h1"} />
+      </Button>
+      <Button
+        active={getStatus("blockType", "bullet")}
+        onClick={() => {
+          if (getStatus("blockType", "bullet")) {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          } else {
+            editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+          }
+        }}
+      >
+        <ToolbarIcon name="bullet" />
+      </Button>
     </div>
   );
 }

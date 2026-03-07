@@ -37,6 +37,10 @@
   tab-size: 1;
 }
 
+.editor-heading-h1 {
+  @apply text-2xl font-bold;
+}
+
 .editor-paragraph {
   @apply m-0 mb-2 relative;
 }
