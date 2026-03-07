@@ -9,6 +9,6 @@ const SUPPORTED_TEXT_FORMATS: TextFormatType[] = [
   "strikethrough",
 ];
 
-const SUPPORTED_ELEMENT_FORMATS: ElementFormatType[] = ["center", "left", "right"];
+const SUPPORTED_ELEMENT_FORMATS: ElementFormatType[] = ["left", "center", "right"];
 
 export { SUPPORTED_TEXT_FORMATS, SUPPORTED_ELEMENT_FORMATS, TOOLBAR_BUTTON_SIZE };

@@ -8,6 +8,8 @@ import {
   TextAlignCenter,
   TextAlignStart,
   TextAlignEnd,
+  Heading1,
+  List,
 } from "lucide-react";
 import {
   $getSelection,
@@ -18,7 +20,21 @@ import {
   mergeRegister,
   ElementNode,
   type ElementFormatType,
+  $createParagraphNode,
 } from "lexical";
+import {
+  $createHeadingNode,
+  $isHeadingNode,
+  type HeadingTagType,
+} from "@lexical/rich-text";
+import {
+  $isListItemNode,
+  $isListNode,
+  INSERT_UNORDERED_LIST_COMMAND,
+  REMOVE_LIST_COMMAND,
+  type ListType,
+} from "@lexical/list";
+import { $setBlocksType } from "@lexical/selection";
 import { useCallback, useEffect, useState } from "react";
 import {
   SUPPORTED_ELEMENT_FORMATS,
@@ -32,9 +48,8 @@ type ToolbarStatus = {
   italic: boolean;
   underline: boolean;
   strikethrough: boolean;
-  center: boolean;
-  left: boolean;
-  right: boolean;
+  elementFormat: ElementFormatType;
+  blockType: ListType | HeadingTagType | "paragraph";
 };
 
 const initToolbarStatus: ToolbarStatus = {
@@ -42,12 +57,11 @@ const initToolbarStatus: ToolbarStatus = {
   italic: false,
   underline: false,
   strikethrough: false,
-  center: false,
-  left: false,
-  right: false,
+  elementFormat: "",
+  blockType: "paragraph",
 };
 
-const getIcon = (format: keyof ToolbarStatus) => {
+const getIcon = (format: string) => {
   const size = TOOLBAR_BUTTON_SIZE;
   switch (format) {
     case "bold":
@@ -72,9 +86,14 @@ const getIcon = (format: keyof ToolbarStatus) => {
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatus>(initToolbarStatus);
-  const getStatus = (option: string) => {
+  const getStatus = (option: string, target?: string) => {
     if (option in toolbarStatus) {
-      return toolbarStatus[option as keyof ToolbarStatus];
+      const value = toolbarStatus[option as keyof ToolbarStatus];
+      if (typeof value === "boolean") {
+        return value;
+      } else {
+        return value === target;
+      }
     }
     return false;
   };
@@ -91,11 +110,18 @@ export default function ToolbarPlugin() {
             ? anchorNode
             : anchorNode.getParent();
 
-      let alignment: ElementFormatType;
+      let format: ElementFormatType;
       if (element instanceof ElementNode) {
-        alignment = element.getFormatType();
+        format = element.getFormatType();
       }
 
+      let blockType: ToolbarStatus["blockType"] = "paragraph";
+      if ($isHeadingNode(element)) {
+        blockType = element.getTag() as "h1" | "h2" | "h3";
+      } else if ($isListItemNode(element)) {
+        const parentList = element.getParent();
+        if ($isListNode(parentList)) blockType = parentList.getListType();
+      }
       setToolbarStatus((prev) => {
         return {
           ...prev,
@@ -103,9 +129,8 @@ export default function ToolbarPlugin() {
           italic: selection.hasFormat("italic"),
           underline: selection.hasFormat("underline"),
           strikethrough: selection.hasFormat("strikethrough"),
-          center: alignment === "center",
-          left: alignment === "left",
-          right: alignment === "right",
+          elementFormat: format,
+          blockType,
         };
       });
     }
@@ -142,9 +167,9 @@ export default function ToolbarPlugin() {
         {SUPPORTED_ELEMENT_FORMATS.map((format) => (
           <Button
             key={format}
-            active={getStatus(format)}
+            active={getStatus("elementFormat", format)}
             onClick={() => {
-              if (getStatus(format)) {
+              if (getStatus("elementFormat", format)) {
                 editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "");
               } else {
                 editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, format);
@@ -155,6 +180,37 @@ export default function ToolbarPlugin() {
           </Button>
         ))}
       </div>
+
+      <Separator orientation="vertical" className="w-px bg-gray-600" />
+      <Button
+        active={getStatus("blockType", "h1")}
+        onClick={() => {
+          editor.update(() => {
+            const selection = $getSelection();
+            if ($isRangeSelection(selection)) {
+              if (getStatus("blockType", "h1")) {
+                $setBlocksType(selection, () => $createParagraphNode());
+              } else {
+                $setBlocksType(selection, () => $createHeadingNode("h1"));
+              }
+            }
+          });
+        }}
+      >
+        <Heading1 />
+      </Button>
+      <Button
+        active={getStatus("blockType", "bullet")}
+        onClick={() => {
+          if (getStatus("blockType", "bullet")) {
+            editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+          } else {
+            editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+          }
+        }}
+      >
+        <List />
+      </Button>
     </div>
   );
 }
