@@ -5,31 +5,16 @@
 }
 
 .editor-container {
-  width: 1000px;
-  margin: 20px auto 20px auto;
-  border-radius: 10px;
-  max-width: 600px;
-  position: relative;
-  line-height: 20px;
-  font-weight: 400;
-  text-align: left;
+  @apply relative w-200 my-5 mx-auto rounded-2xl;
 }
 
 .editor-inner {
-  /* background: #fff; */
-  position: relative;
+  @apply relative;
 }
 
 .editor-placeholder {
-  color: #999;
-  overflow: hidden;
-  position: absolute;
+  @apply absolute top-4 left-2 select-none text-gray-400 overflow-hidden;
   text-overflow: ellipsis;
-  top: 16px;
-  left: 8px;
-  user-select: none;
-  display: inline-block;
-  pointer-events: none;
 }
 
 .editor-input {
@@ -38,7 +23,7 @@
 }
 
 .editor-heading-h1 {
-  @apply text-2xl font-bold;
+  @apply text-2xl font-bold my-2;
 }
 
 .editor-paragraph {
@@ -65,4 +50,8 @@
 
 .editor-text-underlineStrikethrough {
   text-decoration: underline line-through;
+}
+
+.editor-list-ul {
+  @apply list-disc pl-6 my-1;
 }

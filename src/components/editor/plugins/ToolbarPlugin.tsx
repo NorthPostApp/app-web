@@ -4,72 +4,37 @@ import Button from "@/components/ui/Button";
 import {
   $getSelection,
   $isRangeSelection,
-  $isElementNode,
-  FORMAT_ELEMENT_COMMAND,
-  FORMAT_TEXT_COMMAND,
   mergeRegister,
-  ElementNode,
-  type ElementFormatType,
   $createParagraphNode,
 } from "lexical";
-import { $createHeadingNode, $isHeadingNode } from "@lexical/rich-text";
-import {
-  $isListItemNode,
-  $isListNode,
-  INSERT_UNORDERED_LIST_COMMAND,
-  REMOVE_LIST_COMMAND,
-} from "@lexical/list";
+import { $createHeadingNode } from "@lexical/rich-text";
+import { INSERT_UNORDERED_LIST_COMMAND, REMOVE_LIST_COMMAND } from "@lexical/list";
 import { $setBlocksType } from "@lexical/selection";
-import { SUPPORTED_ELEMENT_FORMATS, SUPPORTED_TEXT_FORMATS } from "../editor-config";
 import { Separator } from "@base-ui/react";
 import { useAtom } from "jotai";
-import {
-  derivedToolbarStatusAtom,
-  type BlockType,
-  type ToolbarStatusType,
-} from "@/atoms/editorAtoms";
+import { derivedToolbarStatusAtom, type ToolbarStatusType } from "@/atoms/editorAtoms";
 import ToolbarIcon from "./ToolbarIcon";
+import { getBlockType, getElementFormat } from "./utils";
+import TextFormatControls from "./TextFormatControls";
+import ElementFormatControls from "./ElementFormatControls";
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
   const [toolbarStatus, writeToolbarStatus] = useAtom(derivedToolbarStatusAtom);
 
-  const getStatus = (option: string, target?: string) => {
+  const getStatus = (option: string, target?: string): boolean => {
     if (option in toolbarStatus) {
       const value = toolbarStatus[option as keyof ToolbarStatusType];
-      if (typeof value === "boolean") {
-        return value;
-      } else {
-        return value === target;
-      }
+      return typeof value === "boolean" ? value : value === target;
     }
     return false;
   };
 
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
-
     if ($isRangeSelection(selection)) {
-      const anchorNode = selection.anchor.getNode();
-      const element =
-        anchorNode.getKey() === "root"
-          ? anchorNode
-          : $isElementNode(anchorNode)
-            ? anchorNode
-            : anchorNode.getParent();
-
-      let format: ElementFormatType = "";
-      if (element instanceof ElementNode) {
-        format = element.getFormatType();
-      }
-
-      let blockType: BlockType = "paragraph";
-      if ($isHeadingNode(element)) {
-        blockType = element.getTag() as "h1" | "h2" | "h3";
-      } else if ($isListItemNode(element)) {
-        const parentList = element.getParent();
-        if ($isListNode(parentList)) blockType = parentList.getListType();
-      }
+      const format = getElementFormat(selection);
+      const blockType = getBlockType(selection);
       writeToolbarStatus(selection, format, blockType);
     }
   }, [writeToolbarStatus]);
@@ -77,48 +42,16 @@ export default function ToolbarPlugin() {
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
-        editorState.read(
-          () => {
-            $updateToolbar();
-          },
-          { editor },
-        );
+        editorState.read($updateToolbar, { editor });
       }),
     );
   }, [$updateToolbar, editor]);
 
   return (
     <div className="toolbar">
-      <div>
-        {SUPPORTED_TEXT_FORMATS.map((format) => (
-          <Button
-            key={format}
-            active={getStatus(format)}
-            onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
-          >
-            <ToolbarIcon name={format} />
-          </Button>
-        ))}
-      </div>
+      <TextFormatControls getStatus={getStatus} />
       <Separator orientation="vertical" className="w-px bg-gray-600" />
-      <div>
-        {SUPPORTED_ELEMENT_FORMATS.map((format) => (
-          <Button
-            key={format}
-            active={getStatus("elementFormat", format)}
-            onClick={() => {
-              if (getStatus("elementFormat", format)) {
-                editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "");
-              } else {
-                editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, format);
-              }
-            }}
-          >
-            <ToolbarIcon name={format} />
-          </Button>
-        ))}
-      </div>
-
+      <ElementFormatControls getStatus={getStatus} />
       <Separator orientation="vertical" className="w-px bg-gray-600" />
       <Button
         active={getStatus("blockType", "h1")}
