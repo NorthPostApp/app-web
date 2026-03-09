@@ -1,14 +1,11 @@
-// import { $getRoot, $getSelection } from "lexical";
-
 import { LexicalComposer, type InitialConfigType } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
+import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
 import "./Editor.css";
-
-import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 
 import theme from "@/components/editor/EditorTheme";
 
@@ -32,8 +29,8 @@ export default function Editor() {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="editor-container border shadow">
-        <div className="editor-inner">
+      <div className="editor-container">
+        <div className="editor-inner border rounded-2xl border-(--gray-7)">
           <RichTextPlugin
             contentEditable={
               <ContentEditable
@@ -45,10 +42,10 @@ export default function Editor() {
             ErrorBoundary={LexicalErrorBoundary}
           />
           <AutoFocusPlugin />
-          <ToolbarPlugin />
           <OnChangePlugin />
           <ListPlugin />
         </div>
+        <ToolbarPlugin />
       </div>
     </LexicalComposer>
   );
