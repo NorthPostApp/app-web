@@ -1,11 +1,30 @@
 @import "../../index.css";
 
 .toolbar {
-  @apply w-fit mx-auto flex gap-2 py-1;
+  @apply relative w-fit mx-auto flex gap-3 py-2 bg-(--gray-2) px-3 rounded-full justify-center items-center;
+  box-shadow: 0px 3px 6px var(--gray-a5);
+  background: linear-gradient(to bottom, var(--gray-1), var(--gray-2));
+}
+.toolbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px; /* border thickness */
+  background: linear-gradient(to bottom, var(--gray-1), var(--gray-5));
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .editor-container {
-  @apply relative w-200 my-5 mx-auto rounded-2xl;
+  @apply relative flex flex-col gap-2 w-200 my-5 mx-auto rounded-2xl;
 }
 
 .editor-inner {
@@ -24,6 +43,14 @@
 
 .editor-heading-h1 {
   @apply text-2xl font-bold my-2;
+}
+
+.editor-heading-h2 {
+  @apply text-xl font-bold my-1.5;
+}
+
+.editor-heading-h3 {
+  @apply text-lg font-semibold my-1;
 }
 
 .editor-paragraph {
@@ -53,5 +80,9 @@
 }
 
 .editor-list-ul {
-  @apply list-disc pl-6 my-1;
+  @apply list-inside list-disc my-1;
+}
+
+.editor-list-ol {
+  @apply list-inside list-decimal my-1;
 }

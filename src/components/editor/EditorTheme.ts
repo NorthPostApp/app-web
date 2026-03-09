@@ -2,6 +2,8 @@ export default {
   paragraph: "editor-paragraph",
   heading: {
     h1: "editor-heading-h1",
+    h2: "editor-heading-h2",
+    h3: "editor-heading-h3",
   },
   text: {
     italic: "editor-text-italic",
