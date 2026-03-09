@@ -12,8 +12,8 @@ export default function Button({ active = true, children, ...props }: ButtonProp
     <BaseButton
       {...restProps}
       className={cn(
-        className,
         "p-1 rounded-xl shadow-xl",
+        className,
         active ? "opacity-100" : "opacity-30",
       )}
     >
