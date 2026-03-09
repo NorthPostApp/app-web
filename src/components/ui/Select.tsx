@@ -1,6 +1,7 @@
 import cn from "@/lib/cn";
 import { ChevronDown } from "lucide-react";
 import { Select as BaseSelect, type SelectRootChangeEventDetails } from "@base-ui/react";
+import "./Select.css";
 
 type SelectProps = {
   items: { label: string; value: string }[];
@@ -31,7 +32,7 @@ export default function Select({
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
         <BaseSelect.Positioner sideOffset={8} className="outline-none z-10 select-none">
-          <BaseSelect.Popup className="rounded-2xl bg-(--color-background) bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) border border-(--gray-7) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
+          <BaseSelect.Popup className="select-popup rounded-4xl bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
             <BaseSelect.List className="relative py-2 scroll-py-6 overflow-y-auto max-h-(--available-height) text-sm">
               {items.map(({ label, value }) => (
                 <BaseSelect.Item
@@ -39,7 +40,7 @@ export default function Select({
                   value={value}
                   className={cn(
                     "py-1.5 mx-2 px-3 rounded-2xl",
-                    activeValue === value ? "font-medium bg-(--gray-4)" : "",
+                    activeValue === value ? "font-medium bg-(--gray-2)" : "",
                   )}
                 >
                   <BaseSelect.ItemText>{label}</BaseSelect.ItemText>
