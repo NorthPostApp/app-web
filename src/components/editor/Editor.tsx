@@ -1,3 +1,5 @@
+import { HeadingNode } from "@lexical/rich-text";
+import { ListNode, ListItemNode } from "@lexical/list";
 import { LexicalComposer, type InitialConfigType } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
@@ -5,13 +7,10 @@ import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
-import "./Editor.css";
-
 import theme from "@/components/editor/EditorTheme";
-
-import { HeadingNode } from "@lexical/rich-text";
-import { ListNode, ListItemNode } from "@lexical/list";
-import OnChangePlugin from "./plugins/OnChangePlugin";
+import OnChangePlugin from "@/components/editor/plugins/OnChangePlugin";
+import TabPlugin from "@/components/editor/plugins/TabPlugin";
+import "./Editor.css";
 
 const placeholder = "Enter some rich text...";
 
@@ -44,6 +43,7 @@ export default function Editor() {
           <AutoFocusPlugin />
           <OnChangePlugin />
           <ListPlugin />
+          <TabPlugin />
         </div>
         <ToolbarPlugin />
       </div>
