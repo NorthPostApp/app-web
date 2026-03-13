@@ -29,7 +29,7 @@ export default function Editor() {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className="editor-container">
-        <div className="editor-inner border rounded-2xl border-(--gray-7)">
+        <div className="editor-inner">
           <RichTextPlugin
             contentEditable={
               <ContentEditable

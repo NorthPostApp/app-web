@@ -14,6 +14,7 @@ export default function TextFormatControls({ getStatus }: TextFormatControlsProp
     <div>
       {SUPPORTED_TEXT_FORMATS.map((format) => (
         <Button
+          data-testid={`editor-toolbar-${format}`}
           key={format}
           active={getStatus(format)}
           onClick={() => editor.dispatchCommand(FORMAT_TEXT_COMMAND, format)}
