@@ -12,7 +12,7 @@ import OnChangePlugin from "@/components/editor/plugins/OnChangePlugin";
 import TabPlugin from "@/components/editor/plugins/TabPlugin";
 import "./Editor.css";
 
-const placeholder = "Enter some rich text...";
+const placeholder = "Begin your letter here...";
 
 const onError = (error: Error) => {
   console.error(error);
@@ -29,6 +29,7 @@ export default function Editor() {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className="editor-container">
+        <div className="editor-decoration"></div>
         <div className="editor-inner">
           <RichTextPlugin
             contentEditable={

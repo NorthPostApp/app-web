@@ -1,9 +1,6 @@
 import { useAtomValue } from "jotai";
 import { derivedToolbarStatusAtom } from "@/atoms/editorAtoms";
-import {
-  DEFAULT_BLOCK_TYPE,
-  SUPPORTED_BLOCK_TYPES,
-} from "@/components/editor/editor-config";
+import { SUPPORTED_BLOCK_TYPES } from "@/components/editor/editor-config";
 import { $createParagraphNode, $getSelection, $isRangeSelection } from "lexical";
 import { $createHeadingNode, type HeadingTagType } from "@lexical/rich-text";
 import { $setBlocksType } from "@lexical/selection";
@@ -68,7 +65,6 @@ export default function BlockTypeControls() {
   return (
     <Select
       items={SUPPORTED_BLOCK_TYPES}
-      defaultValue={DEFAULT_BLOCK_TYPE}
       onValueChange={updateBlockType}
       activeValue={toolbarStatus.blockType}
     />

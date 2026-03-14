@@ -1,8 +1,8 @@
 import { atom } from "jotai";
-
 import type { ElementFormatType, RangeSelection } from "lexical";
 import type { ListType } from "@lexical/list";
 import type { HeadingTagType } from "@lexical/rich-text";
+import { DEFAULT_BLOCK_TYPE } from "@/components/editor/editor-config";
 
 /**
  * Toolbar Status Atom
@@ -25,7 +25,7 @@ const initialToolbarStatus: ToolbarStatusType = {
   underline: false,
   strikethrough: false,
   elementFormat: "",
-  blockType: "paragraph",
+  blockType: DEFAULT_BLOCK_TYPE,
 };
 
 const toolbarStatusAtom = atom<ToolbarStatusType>(initialToolbarStatus);
