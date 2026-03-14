@@ -17,4 +17,21 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/lib/test-utils.ts"],
   },
+  build: {
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-lexical": [
+            "lexical",
+            "@lexical/rich-text",
+            "@lexical/list",
+            "@lexical/react/LexicalComposerContext",
+          ],
+          "vendor-react": ["react", "react-dom"],
+          "vendor-jotai": ["jotai"],
+        },
+      },
+    },
+  },
 });

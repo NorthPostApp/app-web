@@ -5,7 +5,7 @@ import "./Select.css";
 
 type SelectProps = {
   items: { label: string; value: string }[];
-  defaultValue: string;
+  defaultValue?: string;
   activeValue: string;
   onValueChange: (
     value: string | null,
@@ -22,7 +22,8 @@ export default function Select({
   return (
     <BaseSelect.Root
       items={items}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue || null}
+      value={activeValue}
       name="blockType"
       onValueChange={onValueChange}
     >

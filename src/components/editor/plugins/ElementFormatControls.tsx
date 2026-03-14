@@ -16,6 +16,7 @@ export default function ElementFormatControls({ getStatus }: ElementFormatContro
       {SUPPORTED_ELEMENT_FORMATS.map((format) => (
         <Button
           key={format}
+          data-testid={`editor-format-${format}`}
           active={getStatus("elementFormat", format)}
           onClick={() => {
             if (getStatus("elementFormat", format)) {
