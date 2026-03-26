@@ -5,7 +5,7 @@ import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
+import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
 import theme from "@/components/editor/EditorTheme";
 import OnChangePlugin from "@/components/editor/plugins/OnChangePlugin";
@@ -41,10 +41,10 @@ export default function Editor() {
             }
             ErrorBoundary={LexicalErrorBoundary}
           />
-          <AutoFocusPlugin />
           <OnChangePlugin />
           <ListPlugin />
           <TabPlugin />
+          <HistoryPlugin />
         </div>
         <ToolbarPlugin />
       </div>

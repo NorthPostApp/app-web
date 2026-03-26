@@ -5,6 +5,7 @@ import { SUPPORTED_TEXT_FORMATS } from "@/components/editor/editor-config";
 import ToolbarIcon from "@/components/editor/plugins/ToolbarIcon";
 import TooltipButton from "@/components/ui/TooltipButton";
 import Kbd from "@/components/ui/Kbd";
+import { MODIFIER_KEY_PREFIX } from "@/consts/app-config";
 
 type TextFormatControlsProps = {
   getStatus: (option: string, target?: string) => boolean;
@@ -15,8 +16,6 @@ const formatShortcut: Partial<Record<TextFormatType, string>> = {
   italic: "I",
   underline: "U",
 };
-
-const modifierKeyPrefix = navigator.platform.startsWith("Mac") ? "⌘" : "Ctrl";
 
 export default function TextFormatControls({ getStatus }: TextFormatControlsProps) {
   const [editor] = useLexicalComposerContext();
@@ -39,7 +38,7 @@ export default function TextFormatControls({ getStatus }: TextFormatControlsProp
           }
           tooltip={
             <div className="toolbar-tooltip">
-              <Kbd>{modifierKeyPrefix}</Kbd>
+              <Kbd>{MODIFIER_KEY_PREFIX}</Kbd>
               <p>{"+"}</p>
               <Kbd>{formatShortcut[format]}</Kbd>
             </div>
