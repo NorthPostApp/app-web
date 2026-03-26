@@ -4,12 +4,8 @@ import { SUPPORTED_ELEMENT_FORMATS } from "../editor-config";
 import { FORMAT_ELEMENT_COMMAND } from "lexical";
 
 const mockGetStatus = vi.fn();
-
-const { mockEditor, mockDispatchCommand } = vi.hoisted(() => {
-  const mockDispatchCommand = vi.fn();
-  const mockEditor = { dispatchCommand: mockDispatchCommand };
-  return { mockEditor, mockDispatchCommand };
-});
+const mockDispatchCommand = vi.fn();
+const mockEditor = { dispatchCommand: mockDispatchCommand };
 
 vi.mock("@lexical/react/LexicalComposerContext", () => ({
   useLexicalComposerContext: () => [mockEditor],

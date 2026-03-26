@@ -5,6 +5,8 @@ import {
   TextAlignCenter,
   TextAlignStart,
   TextAlignEnd,
+  Undo2,
+  Redo2,
 } from "lucide-react";
 import { TOOLBAR_BUTTON_SIZE } from "@/components/editor/editor-config";
 
@@ -27,6 +29,10 @@ export default function ToolbarIcon({ name }: ToolbarIconProps) {
       return <TextAlignStart size={size} />;
     case "right":
       return <TextAlignEnd size={size} />;
+    case "undo":
+      return <Undo2 size={size} />;
+    case "redo":
+      return <Redo2 size={size} />;
     default:
       return null;
   }
