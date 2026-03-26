@@ -2,7 +2,6 @@ import {
   Bold,
   Italic,
   Underline,
-  Strikethrough,
   TextAlignCenter,
   TextAlignStart,
   TextAlignEnd,
@@ -22,8 +21,6 @@ export default function ToolbarIcon({ name }: ToolbarIconProps) {
       return <Italic size={size} />;
     case "underline":
       return <Underline size={size} />;
-    case "strikethrough":
-      return <Strikethrough size={size} />;
     case "center":
       return <TextAlignCenter size={size} />;
     case "left":
