@@ -7,6 +7,7 @@ import { getBlockType, getElementFormat } from "@/components/editor/plugins/util
 import TextFormatControls from "@/components/editor/plugins/TextFormatControls";
 import ElementFormatControls from "@/components/editor/plugins/ElementFormatControls";
 import BlockTypeControls from "@/components/editor/plugins/BlockTypeControls";
+import { Tooltip } from "@base-ui/react";
 
 export default function ToolbarPlugin() {
   const [editor] = useLexicalComposerContext();
@@ -38,10 +39,12 @@ export default function ToolbarPlugin() {
   }, [$updateToolbar, editor]);
 
   return (
-    <div className="toolbar">
-      <BlockTypeControls />
-      <TextFormatControls getStatus={getStatus} />
-      <ElementFormatControls getStatus={getStatus} />
-    </div>
+    <Tooltip.Provider delay={100}>
+      <div className="toolbar">
+        <BlockTypeControls />
+        <TextFormatControls getStatus={getStatus} />
+        <ElementFormatControls getStatus={getStatus} />
+      </div>
+    </Tooltip.Provider>
   );
 }

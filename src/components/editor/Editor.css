@@ -23,6 +23,10 @@
   pointer-events: none;
 }
 
+.toolbar-tooltip {
+  @apply text-sm text-(--gray-9) flex justify-center items-center gap-1;
+}
+
 .editor-container {
   @apply relative flex flex-col items-start gap-4 w-200 my-5 mx-auto p-6;
 }
@@ -34,7 +38,8 @@
 .editor-decoration {
   @apply absolute left-0 top-0 w-full h-full rounded-4xl;
   box-shadow: 0px 3px 6px var(--gray-a5);
-  background-image: linear-gradient(to bottom, transparent, var(--gray-a1)),
+  background-image:
+    linear-gradient(to bottom, transparent, var(--gray-a1)),
     linear-gradient(var(--gray-a2) 1px, transparent 1px),
     linear-gradient(90deg, var(--gray-a2) 1px, transparent 1px);
   background-size:
