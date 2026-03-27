@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:dev": "tsc -b && vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "preview:dev": "vite preview --mode development",
     "test": "vitest",
     "format": "prettier --write .",
     "coverage": "vitest run --coverage"
@@ -16,6 +18,7 @@
     "@base-ui/react": "^1.2.0",
     "@lexical/react": "^0.41.0",
     "@tailwindcss/vite": "^4.2.1",
+    "@tanstack/react-query": "^5.95.2",
     "clsx": "^2.1.1",
     "jotai": "^2.18.0",
     "lexical": "^0.41.0",
@@ -23,10 +26,12 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwind-merge": "^3.5.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@tanstack/eslint-plugin-query": "^5.95.2",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
@@ -40,6 +45,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^28.1.0",
+    "msw": "^2.12.14",
     "prettier": "^3.8.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",

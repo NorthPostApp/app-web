@@ -32,8 +32,12 @@ export default function Select({
         <ChevronDown size={16} />
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
-        <BaseSelect.Positioner sideOffset={8} className="outline-none z-10 select-none">
-          <BaseSelect.Popup className="select-popup rounded-4xl bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
+        <BaseSelect.Positioner
+          sideOffset={8}
+          className="outline-none z-10 select-none"
+          alignItemWithTrigger={false}
+        >
+          <BaseSelect.Popup className="select-popup rounded-3xl bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
             <BaseSelect.List className="relative py-2 scroll-py-6 overflow-y-auto max-h-(--available-height) text-sm">
               {items.map(({ label, value }) => (
                 <BaseSelect.Item
