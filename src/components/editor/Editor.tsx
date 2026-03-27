@@ -6,6 +6,7 @@ import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
+import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import ToolbarPlugin from "@/components/editor/plugins/ToolbarPlugin";
 import theme from "@/components/editor/EditorTheme";
 import OnChangePlugin from "@/components/editor/plugins/OnChangePlugin";
@@ -45,6 +46,7 @@ export default function Editor() {
           <ListPlugin />
           <TabPlugin />
           <HistoryPlugin />
+          <AutoFocusPlugin />
         </div>
         <ToolbarPlugin />
       </div>
