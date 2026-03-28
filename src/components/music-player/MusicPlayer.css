@@ -1,0 +1,53 @@
+@import "../../index.css";
+
+.music-player {
+  @apply w-96 py-4 px-5 rounded-3xl shadow-(--base-shadow) flex flex-col items-center gap-2 bg-(--color-background);
+}
+
+.music-player__state {
+  @apply w-full flex flex-col items-center text-sm;
+}
+
+.music-player__control {
+  @apply flex items-center justify-center gap-2;
+}
+
+.music-player__control__main {
+  @apply w-9 h-9 p-0 bg-(--gray-a9) rounded-full hover:bg-(--accent-9);
+}
+
+.music-player__control__main__icon {
+  @apply fill-(--color-background) stroke-0 mx-auto;
+}
+
+.music-player__control__side {
+  @apply w-7 h-7 p-0;
+}
+
+.music-player__control__side__icon {
+  @apply fill-(--gray-8) stroke-(--gray-8) group-hover:fill-(--accent-9) group-hover:stroke-(--accent-9) mx-auto;
+}
+
+.music-player__slider {
+  @apply w-full flex gap-2 justify-center items-center;
+}
+
+.music-player__slider__root {
+  @apply flex-1;
+}
+
+.music-player__slider__track {
+  @apply w-full h-1 bg-(--gray-6) group-hover:bg-(--accent-7) group-hover:cursor-pointer rounded-full;
+}
+
+.music-player__slider__indicator {
+  @apply bg-(--gray-9) group-hover:bg-(--accent-9) rounded-full select-none;
+}
+
+.music-player__slider__thumb {
+  @apply invisible group-hover:visible w-3.5 h-3.5 select-none bg-(--accent-8) outline-0 rounded-full;
+}
+
+.music-player__slider p {
+  @apply w-10;
+}

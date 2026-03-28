@@ -54,7 +54,7 @@
 }
 
 .editor-input {
-  @apply relative resize-none text-base h-full caret-slate-400 outline-0 overflow-y-auto;
+  @apply relative resize-none text-base h-full caret-slate-400 outline-none overflow-y-auto;
   tab-size: 4;
 }
 

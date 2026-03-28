@@ -7,6 +7,7 @@ export function useGetMusicListQuery() {
     queryFn: async ({ signal }) => {
       return getMusicList("abc", signal);
     },
+    enabled: false,
   });
   return query;
 }
