@@ -11,7 +11,11 @@ export default function Button({ active = true, children, ...props }: ButtonProp
   return (
     <BaseButton
       {...restProps}
-      className={cn("p-1 rounded-xl", className, active ? "opacity-100" : "opacity-30")}
+      className={cn(
+        "p-1 rounded-xl hover:cursor-pointer",
+        className,
+        active ? "opacity-100" : "opacity-30",
+      )}
     >
       {children}
     </BaseButton>

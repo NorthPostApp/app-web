@@ -15,7 +15,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./src/lib/test-utils.ts"],
+    setupFiles: ["./src/lib/test-utils.tsx"],
+    coverage: {
+      exclude: ["*.css"],
+    },
   },
   build: {
     emptyOutDir: true,
@@ -35,9 +38,10 @@ export default defineConfig({
             "@lexical/react/LexicalAutoFocusPlugin",
           ],
           "vendor-jotai": ["jotai"],
-          "vendor-base-ui": ["@base-ui/react"],
-          "vendor-lucid": ["lucide-react"],
+          "vendor-ui": ["@base-ui/react", "lucide-react"],
+          "vendor-tailwind": ["clsx", "tailwindcss", "tailwind-merge"],
           "vendor-zod": ["zod"],
+          "vendor-sonner": ["sonner"],
         },
       },
     },
