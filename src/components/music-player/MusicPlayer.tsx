@@ -1,5 +1,5 @@
 import { currentSongIndexAtom, musicListAtom } from "@/atoms/musicAtoms";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useAtom } from "jotai";
 import { toast } from "sonner";
 import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
@@ -14,20 +14,22 @@ export default function MusicPlayer() {
   const [musicList, setMusicList] = useAtom(musicListAtom);
   const [currentSongIndex, setCurrentSongIndex] = useAtom(currentSongIndexAtom);
   const { refetch: fetchMusicList } = useGetMusicListQuery();
-  const { durationInSec, isPlaying, load, play, pause, seek, currentTime } =
-    useMusicPlayer();
 
   const currentMusicItem =
     musicList && musicList.length > 0 ? musicList[currentSongIndex] : undefined;
   const { refetch: fetchMusicURL } = useGetMusicURLQuery(currentMusicItem?.filename);
 
   const numSongs = musicList ? musicList.length : 0;
-  const playNextSong = () => {
+  const playNextSong = useCallback(() => {
     setCurrentSongIndex((prev) => (prev + 1) % numSongs);
-  };
-  const playPrevSong = () => {
+  }, [setCurrentSongIndex, numSongs]);
+  const playPrevSong = useCallback(() => {
     setCurrentSongIndex((prev) => (prev - 1 + numSongs) % numSongs);
-  };
+  }, [setCurrentSongIndex, numSongs]);
+
+  const { durationInSec, isPlaying, load, play, pause, seek, currentTime } =
+    useMusicPlayer(playNextSong);
+
   const playPauseMusic = () => {
     if (isPlaying) pause();
     else play();
