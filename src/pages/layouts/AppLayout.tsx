@@ -1,12 +1,10 @@
-// import "./App.css";
-import { Toaster } from "sonner";
-import Editor from "./components/editor/Editor";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import MusicPlayer from "./components/music-player/MusicPlayer";
+import { Outlet } from "react-router";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient();
 
-function App() {
+export default function AppLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster
@@ -19,12 +17,7 @@ function App() {
           },
         }}
       />
-      <div className="flex flex-col justify-center items-center gap-2">
-        <Editor />
-        <MusicPlayer />
-      </div>
+      <Outlet />
     </QueryClientProvider>
   );
 }
-
-export default App;
