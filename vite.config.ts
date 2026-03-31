@@ -42,6 +42,8 @@ export default defineConfig({
           "vendor-tailwind": ["clsx", "tailwindcss", "tailwind-merge"],
           "vendor-zod": ["zod"],
           "vendor-sonner": ["sonner"],
+          "vendor-react": ["react-router"],
+          "vendor-firebase": ["firebase/app", "firebase/auth"],
         },
       },
     },
