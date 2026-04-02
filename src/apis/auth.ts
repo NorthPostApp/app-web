@@ -7,11 +7,13 @@ import {
   type AuthProvider,
 } from "firebase/auth";
 import { toast } from "sonner";
+import { BASE_URL, type ServiceError } from "@/apis/shared";
+import { GetUserDataResponse, type UserDataSchema } from "@/schemas/user";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
-const handleThrowError = (error: unknown) => {
+const handleAuthenticationError = (error: unknown) => {
   const errorInstance = new Error("failed to signin. Please check the internet.");
   if (error instanceof Error) {
     errorInstance.message = error.message;
@@ -19,29 +21,47 @@ const handleThrowError = (error: unknown) => {
     errorInstance.message = error;
   }
   toast.error(errorInstance.message);
-  return errorInstance;
+  console.error(errorInstance);
+};
+
+// verify user data in database
+const authenticateUser = async (idToken: string): Promise<UserDataSchema> => {
+  const url = new URL("signin", BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+    },
+  });
+  if (!response.ok) {
+    const errorData = (await response.json()) as ServiceError;
+    const errorMessage = errorData.error || "failed to authenticate user";
+    throw new Error(errorMessage);
+  }
+  const userData = GetUserDataResponse.parse(await response.json()).data;
+  return userData;
 };
 
 const signInWithProvider = async (provider: AuthProvider) => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    console.log(result);
-    toast.message(`Welcome back ${result.user.displayName}`);
-  } catch (error) {
-    handleThrowError(error);
-  }
+  await signInWithPopup(auth, provider);
 };
 
 const signInWithGoogle = () => signInWithProvider(googleProvider);
 const signInWithGithub = () => signInWithProvider(githubProvider);
 
 const signOut = async () => {
-  try {
-    await firebaseSignout(auth);
-    toast("signed out");
-  } catch (error) {
-    throw handleThrowError(error);
-  }
+  await firebaseSignout(auth);
 };
 
-export { signInWithGoogle, signInWithGithub, signOut };
+const getUserIdToken = async () => {
+  return await auth.currentUser?.getIdToken();
+};
+
+export {
+  signInWithGoogle,
+  signInWithGithub,
+  signOut,
+  getUserIdToken,
+  handleAuthenticationError,
+  authenticateUser,
+};

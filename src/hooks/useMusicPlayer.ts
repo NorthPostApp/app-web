@@ -62,6 +62,13 @@ export function useMusicPlayer(playNextSong?: () => void, autoPlay: boolean = tr
         },
         { signal: abortControllerRef.current.signal },
       );
+      // these two functions handle bluetooth earphone-caused play and paused states
+      audio.addEventListener("pause", () => setIsPlaying(false), {
+        signal: abortControllerRef.current.signal,
+      });
+      audio.addEventListener("play", () => setIsPlaying(true), {
+        signal: abortControllerRef.current.signal,
+      });
     },
     [autoPlay, playNextSong],
   );
