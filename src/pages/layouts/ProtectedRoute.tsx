@@ -32,6 +32,7 @@ export default function ProtectedRoute() {
         toast.message(`Welcome back ${userData.displayName}`);
       } catch (error) {
         handleAuthenticationError(error);
+        setUserAtomData(null);
         setAuthenticated(false);
       } finally {
         setLoading(false);
