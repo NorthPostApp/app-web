@@ -35,7 +35,7 @@
 }
 
 .bg-grid {
-  box-shadow: 0px 3px 6px var(--gray-a5);
+  box-shadow: var(--base-shadow);
   background-image:
     linear-gradient(to bottom, transparent, var(--gray-a1)),
     linear-gradient(var(--gray-a2) 1px, transparent 1px),

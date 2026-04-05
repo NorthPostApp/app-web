@@ -36,11 +36,11 @@
 }
 
 .address-book__tab__selector {
-  @apply group-hover:cursor-pointer h-19 text-center text-sm;
+  @apply group-hover:cursor-pointer text-center text-sm;
 }
 
 .address-book__tab__indicator {
-  @apply absolute h-19 w-full bg-(--accent-a8) -z-10 rounded-l-2xl duration-100 transition-all;
+  @apply absolute w-full bg-(--accent-a8) -z-10 rounded-l-2xl duration-100 transition-all;
 }
 
 .address-book__tab__body {

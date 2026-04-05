@@ -32,7 +32,7 @@ export default function AddressBook() {
             <div
               key={tabName.value}
               className={cn(
-                "address-book__tab__selector",
+                "address-book__tab__selector h-19",
                 tabName.value === currTab && "text-(--gray-1)",
               )}
               onClick={() => selectTab(index)}
@@ -41,7 +41,10 @@ export default function AddressBook() {
             </div>
           ))}
           <div
-            className={cn("address-book__tab__indicator", `bottom-${indexMap.curr * 19}`)}
+            className="address-book__tab__indicator h-19"
+            style={{
+              bottom: `${indexMap.curr * 76}px`,
+            }}
           ></div>
         </div>
         <div className="address-book__tab__body">
