@@ -16,6 +16,7 @@
 
   --text-color: var(--gray-11);
   --base-shadow: 0px 3px 6px var(--gray-a5);
+  --base-shadow-inset: 0px 1px 6px var(--gray-a5);
 }
 
 ::selection {
@@ -25,4 +26,22 @@
 
 :focus-visible {
   outline: none;
+}
+
+/* Standard styles */
+
+.text-sideway {
+  writing-mode: sideways-lr;
+}
+
+.bg-grid {
+  box-shadow: 0px 3px 6px var(--gray-a5);
+  background-image:
+    linear-gradient(to bottom, transparent, var(--gray-a1)),
+    linear-gradient(var(--gray-a2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--gray-a2) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    17px 17px,
+    17px 17px;
 }

@@ -1,0 +1,60 @@
+@import "../../index.css";
+
+/* Animations */
+@keyframes slide-in-rtl {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-ltr {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.address-book {
+  @apply relative flex w-200 h-100 p-4;
+}
+
+.address-book__bg {
+  @apply -z-10 absolute left-0 top-0 w-full h-full rounded-4xl shadow-(--base-shadow);
+}
+
+.address-book__inner {
+  @apply flex flex-1 items-end;
+}
+
+.address-book__tabs {
+  @apply relative flex h-fit w-8 justify-center items-center border-dashed border border-(--accent-a6) border-r-0 rounded-l-2xl;
+}
+
+.address-book__tab__selector {
+  @apply group-hover:cursor-pointer h-19 text-center text-sm;
+}
+
+.address-book__tab__indicator {
+  @apply absolute h-19 w-full bg-(--accent-a8) -z-10 rounded-l-2xl duration-100 transition-all;
+}
+
+.address-book__tab__body {
+  @apply w-full h-full border-dashed border border-(--accent-a6) overflow-x-hidden bg-(--color-background) rounded-3xl p-4 rounded-bl-none inset-shadow-(--base-shadow-inset);
+}
+
+.tab-content {
+  @apply w-full h-full;
+}
+
+.tab-content__ltr {
+  @apply animate-[slide-in-ltr_0.3s_ease-in-out_forwards];
+}
+
+.tab-content__rtl {
+  @apply animate-[slide-in-rtl_0.3s_ease-in-out_forwards];
+}

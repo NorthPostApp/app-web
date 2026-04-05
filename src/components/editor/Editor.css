@@ -1,8 +1,7 @@
 @import "../../index.css";
 
 .toolbar {
-  @apply relative flex gap-3 py-2 bg-(--gray-2) px-3 rounded-full justify-center items-center;
-  box-shadow: 0px 3px 6px var(--gray-a5);
+  @apply relative flex gap-3 py-2 bg-(--gray-2) px-3 rounded-full justify-center items-center shadow-(--base-shadow);
   background: linear-gradient(to bottom, var(--gray-1), var(--gray-2));
 }
 .toolbar::before {
@@ -36,16 +35,7 @@
 }
 
 .editor-decoration {
-  @apply absolute left-0 top-0 w-full h-full rounded-4xl;
-  box-shadow: 0px 3px 6px var(--gray-a5);
-  background-image:
-    linear-gradient(to bottom, transparent, var(--gray-a1)),
-    linear-gradient(var(--gray-a2) 1px, transparent 1px),
-    linear-gradient(90deg, var(--gray-a2) 1px, transparent 1px);
-  background-size:
-    100% 100%,
-    17px 17px,
-    17px 17px;
+  @apply absolute left-0 top-0 w-full h-full rounded-4xl shadow-(--base-shadow);
 }
 
 .editor-placeholder {

@@ -30,7 +30,7 @@ export default function Editor() {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className="editor-container">
-        <div className="editor-decoration"></div>
+        <div className="editor-decoration bg-grid"></div>
         <div className="editor-inner">
           <RichTextPlugin
             contentEditable={
