@@ -49,7 +49,6 @@ export function useMusicPlayer(playNextSong?: () => void, autoPlay: boolean = tr
             if (autoPlay && playNextSong) {
               playNextSong();
             } else {
-              setIsPlaying(false);
               setCurrentTime(0);
               // implement next song here.
               // maybe consider a different types of loops
@@ -63,9 +62,18 @@ export function useMusicPlayer(playNextSong?: () => void, autoPlay: boolean = tr
         { signal: abortControllerRef.current.signal },
       );
       // these two functions handle bluetooth earphone-caused play and paused states
-      audio.addEventListener("pause", () => setIsPlaying(false), {
-        signal: abortControllerRef.current.signal,
-      });
+      audio.addEventListener(
+        "pause",
+        () => {
+          // the pause event fires before ended event, therefore
+          // without checking is audio.ended, setting is playing to false
+          // will break the auto play
+          if (!audio.ended) setIsPlaying(false);
+        },
+        {
+          signal: abortControllerRef.current.signal,
+        },
+      );
       audio.addEventListener("play", () => setIsPlaying(true), {
         signal: abortControllerRef.current.signal,
       });
@@ -77,7 +85,6 @@ export function useMusicPlayer(playNextSong?: () => void, autoPlay: boolean = tr
     if (audioRef.current) {
       audioRef.current
         .play()
-        .then(() => setIsPlaying(true))
         .catch(() =>
           toast.error("failed to play music, please check if the music file is valid"),
         );
@@ -87,7 +94,6 @@ export function useMusicPlayer(playNextSong?: () => void, autoPlay: boolean = tr
   const pause = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.pause();
-      setIsPlaying(false);
     }
   }, []);
 
