@@ -1,5 +1,6 @@
 .select-popup {
-  background: linear-gradient(to bottom, var(--gray-a1), var(--gray-a2));
+  background: linear-gradient(to bottom, var(--gray-1), var(--gray-2));
+  opacity: 95%;
 }
 .select-popup::before {
   content: "";

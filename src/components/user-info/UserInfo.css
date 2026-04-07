@@ -1,0 +1,17 @@
+@import "../../index.css";
+
+.user-info {
+  @apply w-96 h-30 flex justify-between p-5 shadow-(--base-shadow) rounded-3xl;
+}
+
+.user-info__body {
+  @apply flex flex-col justify-between items-end;
+}
+
+.user-info__body__controls {
+  @apply flex items-center justify-between px-3 py-0.5 rounded-2xl inset-shadow-(--base-shadow-inset);
+}
+
+.user-info__body__svg {
+  @apply group-hover:stroke-(--accent-8) stroke-(--gray-8) mx-2 stroke-[1.5px] group-hover:stroke-2;
+}

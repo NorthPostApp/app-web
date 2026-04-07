@@ -1,7 +1,7 @@
 @import "../../index.css";
 
 .music-player {
-  @apply w-96 py-4 px-5 rounded-3xl shadow-(--base-shadow) flex flex-col items-center gap-2 bg-(--color-background);
+  @apply w-96 h-30 py-4 px-5 rounded-3xl shadow-(--base-shadow) flex flex-col justify-between items-center gap-2 bg-(--color-background);
 }
 
 .music-player__state {
