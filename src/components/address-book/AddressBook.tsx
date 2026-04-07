@@ -1,8 +1,11 @@
 import { useState } from "react";
-import "./AddressBook.css";
-import TabContent from "./tabs/TabContent";
-import { addressBookTabs, getTabContent } from "./address-book-config";
 import cn from "@/lib/cn";
+import TabContent from "@/components/address-book/tabs/TabContent";
+import {
+  addressBookTabs,
+  getTabContent,
+} from "@/components/address-book/address-book-config";
+import "./AddressBook.css";
 
 export default function AddressBook() {
   const [indexMap, setIndexMap] = useState<{ prev: number; curr: number }>({
