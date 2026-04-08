@@ -40,7 +40,7 @@ describe("UserSettingsPopover", () => {
       expect(screen.getByText("中文")).toBeTruthy();
     });
     const chineseOption = screen.getByText("中文");
-    user.click(chineseOption);
+    await user.click(chineseOption);
     await waitFor(() => {
       expect(chineseOption.parentElement).toHaveAttribute("aria-selected", "true");
     });

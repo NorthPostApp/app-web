@@ -42,7 +42,7 @@ const derivedLanguageAtom = atom(
     if (language !== prevConfig.language) {
       const newConfig = { ...prevConfig, language };
       updateLocalConfig(newConfig);
-      set(appConfigAtom, { ...prevConfig, language });
+      set(appConfigAtom, newConfig);
     }
   },
 );
