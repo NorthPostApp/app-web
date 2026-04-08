@@ -7,7 +7,7 @@
     <title>North Post</title>
     <script>
       let theme = "system";
-      const localConfig = JSON.parse(localStorage.getItem("north-post-app"));
+      const localConfig = JSON.parse(localStorage.getItem("north-post-app") || "{}");
       if (localConfig.theme) {
         theme = localConfig.theme;
       }
