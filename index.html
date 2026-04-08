@@ -13,7 +13,9 @@
       }
       document.documentElement.classList.remove("light", "dark");
       if (theme !== "dark" && theme !== "light") {
-        theme = window.matchMedia("prefer-color-scheme: dark").matches ? "dark" : "light";
+        theme = window.matchMedia("prefers-color-scheme: dark").matches
+          ? "dark"
+          : "light";
       }
       document.documentElement.classList.add(theme);
     </script>

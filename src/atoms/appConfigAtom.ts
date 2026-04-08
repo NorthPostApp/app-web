@@ -22,7 +22,7 @@ const updateLocalConfig = (newConfig: AppConfigSchema) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newConfig));
 };
 
-const updateTheme = (theme: "light" | "dark" | "system") => {
+const updateTheme = (theme: AppConfigSchema["theme"]) => {
   const root = window.document.documentElement;
   root.classList.remove("light", "dark");
   if (theme === "system") {
