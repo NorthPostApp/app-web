@@ -5,6 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>North Post</title>
+    <script>
+      let theme = "system";
+      const localConfig = JSON.parse(localStorage.getItem("north-post-app") || "{}");
+      if (localConfig.theme) {
+        theme = localConfig.theme;
+      }
+      document.documentElement.classList.remove("light", "dark");
+      if (theme !== "dark" && theme !== "light") {
+        theme = window.matchMedia("prefers-color-scheme: dark").matches
+          ? "dark"
+          : "light";
+      }
+      document.documentElement.classList.add(theme);
+    </script>
   </head>
   <body>
     <div id="root"></div>

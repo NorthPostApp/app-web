@@ -10,6 +10,14 @@ beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
+// Mock window api
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: vi.fn().mockImplementation(() => ({
+    matches: false,
+  })),
+});
+
 const renderWithProviders = (
   children: ReactNode,
   store?: ReturnType<typeof createStore>,
