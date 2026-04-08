@@ -1,6 +1,5 @@
 import Editor from "@/components/editor/Editor";
 import MusicPlayer from "@/components/music-player/MusicPlayer";
-import { signOut } from "@/apis/auth";
 import AddressBook from "@/components/address-book/AddressBook";
 import UserInfo from "@/components/user-info/UserInfo";
 
@@ -13,7 +12,6 @@ export default function Home() {
         <MusicPlayer />
       </div>
       <AddressBook />
-      <button onClick={() => signOut()}>Sign Out</button>
     </div>
   );
 }

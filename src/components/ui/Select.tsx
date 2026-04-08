@@ -11,6 +11,19 @@ type SelectProps = {
     value: string | null,
     eventDetails: SelectRootChangeEventDetails,
   ) => void;
+  size?: "sm" | "lg";
+  alignItemWithTrigger?: boolean;
+};
+
+const getWidth = (size: string | undefined) => {
+  switch (size) {
+    case "sm":
+      return "min-w-30";
+    case "lg":
+      return "min-w-40";
+    default:
+      return "min-w-40";
+  }
 };
 
 export default function Select({
@@ -18,7 +31,10 @@ export default function Select({
   defaultValue,
   activeValue,
   onValueChange,
+  size,
+  alignItemWithTrigger = false,
 }: SelectProps) {
+  const widthInTailwindUnit = getWidth(size);
   return (
     <BaseSelect.Root
       items={items}
@@ -27,7 +43,12 @@ export default function Select({
       name="blockType"
       onValueChange={onValueChange}
     >
-      <BaseSelect.Trigger className="box-border flex items-center justify-between gap-4 h-8 pl-3.5 min-w-40 pr-3 m-0 rounded-2xl font-medium text-sm">
+      <BaseSelect.Trigger
+        className={cn(
+          widthInTailwindUnit,
+          "box-border flex items-center justify-between gap-4 h-8 pl-3.5 pr-3 m-0 rounded-2xl font-medium text-sm",
+        )}
+      >
         <BaseSelect.Value />
         <ChevronDown size={16} />
       </BaseSelect.Trigger>
@@ -35,9 +56,9 @@ export default function Select({
         <BaseSelect.Positioner
           sideOffset={8}
           className="outline-none z-10 select-none"
-          alignItemWithTrigger={false}
+          alignItemWithTrigger={alignItemWithTrigger}
         >
-          <BaseSelect.Popup className="select-popup rounded-3xl bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
+          <BaseSelect.Popup className="select-popup rounded-3xl shadow-(--base-shadow) bg-clip-padding min-w-(--anchor-width) origin-(--transform-origin) transition-[transform,scale,opacity] data-ending-style:scale-90 data-ending-style:opacity-0 data-[side=none]:min-w-[calc(var(--anchor-width)+0.5rem)]">
             <BaseSelect.List className="relative py-2 scroll-py-6 overflow-y-auto max-h-(--available-height) text-sm">
               {items.map(({ label, value }) => (
                 <BaseSelect.Item

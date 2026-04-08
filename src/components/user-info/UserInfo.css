@@ -15,3 +15,11 @@
 .user-info__body__svg {
   @apply group-hover:stroke-(--accent-8) stroke-(--gray-8) mx-2 stroke-[1.5px] group-hover:stroke-2;
 }
+
+.user-info__settings__popover {
+  @apply text-sm flex flex-col justify-center gap-3;
+}
+
+.user-info__settings__popover__section {
+  @apply flex gap-3 justify-between items-center;
+}
