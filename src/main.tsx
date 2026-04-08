@@ -16,6 +16,8 @@ createRoot(document.getElementById("root")!).render(
           style: {
             color: "var(--text-color)",
             boxShadow: "var(--base-shadow)",
+            background: "var(--color-background)",
+            borderColor: "var(--gray-5)",
             borderRadius: "1rem",
           },
         }}

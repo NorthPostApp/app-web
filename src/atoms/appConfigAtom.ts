@@ -22,6 +22,19 @@ const updateLocalConfig = (newConfig: AppConfigSchema) => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newConfig));
 };
 
+const updateTheme = (theme: "light" | "dark" | "system") => {
+  const root = window.document.documentElement;
+  root.classList.remove("light", "dark");
+  if (theme === "system") {
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+    root.classList.add(systemTheme);
+  } else {
+    root.classList.add(theme);
+  }
+};
+
 const appConfigAtom = atom(getLocalAppConfig());
 
 // update theme
@@ -30,6 +43,7 @@ const derivedThemeAtom = atom(null, (get, set) => {
   const currThemeIndex = SUPPORTED_THEMES.indexOf(prevConfig.theme);
   const nextThemeIndex = (currThemeIndex + 1) % SUPPORTED_THEMES.length;
   const newConfig = { ...prevConfig, theme: SUPPORTED_THEMES[nextThemeIndex] };
+  updateTheme(newConfig.theme);
   updateLocalConfig(newConfig);
   set(appConfigAtom, newConfig);
 });
