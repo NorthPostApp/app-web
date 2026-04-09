@@ -7,12 +7,14 @@ import { auth } from "@/lib/firebase";
 import { setUserAtom } from "@/atoms/userAtoms";
 import { authenticateUser, getUserIdToken, handleAuthenticationError } from "@/apis/auth";
 import AppLayout from "@/pages/layouts/AppLayout";
+import { useTranslation } from "react-i18next";
 
 export default function ProtectedRoute() {
   const [loading, setLoading] = useState<boolean>(true);
   const [authenticated, setAuthenticated] = useState<boolean>(false);
   const location = useLocation();
   const setUserAtomData = useSetAtom(setUserAtom);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -29,7 +31,7 @@ export default function ProtectedRoute() {
         const userData = await authenticateUser(idToken);
         setUserAtomData(userData);
         setAuthenticated(true);
-        toast.message(`Welcome back ${userData.displayName}`);
+        toast.message(`${t("toast.signIn.success", { name: userData.displayName })}`);
       } catch (error) {
         handleAuthenticationError(error);
         setUserAtomData(null);

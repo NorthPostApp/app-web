@@ -7,6 +7,7 @@ import UserSettingsPopover from "@/components/user-info/UserSettingsPopover";
 import TooltipButton from "@/components/ui/TooltipButton";
 import "./UserInfo.css";
 import { Tooltip } from "@base-ui/react";
+import { useTranslation } from "react-i18next";
 
 const ICON_SIZE = 22;
 
@@ -14,6 +15,7 @@ export default function UserInfo() {
   const userData = useAtomValue(userAtom);
   const appConfigData = useAtomValue(appConfigAtom);
   const switchTheme = useSetAtom(derivedThemeAtom);
+  const { t } = useTranslation();
   return (
     <div className="user-info">
       <img src={userData?.imageUrl} className="rounded-full"></img>
@@ -37,7 +39,9 @@ export default function UserInfo() {
                   <SunMoon size={ICON_SIZE} className="user-info__body__svg" />
                 </Button>
               }
-              tooltip={<p className="text-sm">{appConfigData.theme}</p>}
+              tooltip={
+                <p className="text-sm">{t(`settings.theme.${appConfigData.theme}`)}</p>
+              }
               closeOnClick={false}
               side={"bottom"}
             />
