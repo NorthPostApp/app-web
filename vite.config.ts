@@ -17,7 +17,7 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/lib/test-utils.tsx"],
     coverage: {
-      exclude: ["*.css"],
+      exclude: ["*.css", "i18n/*"],
     },
   },
   build: {

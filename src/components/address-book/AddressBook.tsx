@@ -6,6 +6,7 @@ import {
   getTabContent,
 } from "@/components/address-book/address-book-config";
 import "./AddressBook.css";
+import { useTranslation } from "react-i18next";
 
 export default function AddressBook() {
   const [indexMap, setIndexMap] = useState<{ prev: number; curr: number }>({
@@ -13,8 +14,10 @@ export default function AddressBook() {
     curr: 0,
   });
 
+  const { t } = useTranslation();
+
   const animateDirection = indexMap.curr - indexMap.prev > 0 ? "rtl" : "ltr";
-  const currTab = addressBookTabs[indexMap.curr].value;
+  const currTab = addressBookTabs[indexMap.curr];
 
   const selectTab = (index: number) => {
     const maxIndex = addressBookTabs.length - 1;
@@ -33,14 +36,14 @@ export default function AddressBook() {
         <div className="address-book__tabs group text-sideway">
           {addressBookTabs.map((tabName, index) => (
             <div
-              key={tabName.value}
+              key={tabName}
               className={cn(
                 "address-book__tab__selector h-19",
-                tabName.value === currTab && "text-(--gray-1)",
+                tabName === currTab && "text-(--gray-1)",
               )}
               onClick={() => selectTab(index)}
             >
-              {tabName.displayName}
+              {t(`addressBook.tabs.${tabName}`)}
             </div>
           ))}
           <div

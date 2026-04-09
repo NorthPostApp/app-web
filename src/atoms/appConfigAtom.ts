@@ -1,26 +1,11 @@
-import { LOCAL_STORAGE_KEY, SUPPORTED_THEMES } from "@/consts/app-config";
-import { AppConfig, type AppConfigSchema } from "@/schemas/app-config";
 import { atom } from "jotai";
-
-// should load from local storage if exists
-const defaultConfig: AppConfigSchema = {
-  language: "EN",
-  theme: "light",
-};
-
-const getLocalAppConfig = () => {
-  const localAppConfig = localStorage.getItem(LOCAL_STORAGE_KEY) || "{}";
-  const parsedResult = AppConfig.safeParse(JSON.parse(localAppConfig));
-  if (!parsedResult.success) {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultConfig));
-    return defaultConfig;
-  }
-  return parsedResult.data;
-};
-
-const updateLocalConfig = (newConfig: AppConfigSchema) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newConfig));
-};
+import {
+  getLocalAppConfig,
+  SUPPORTED_THEMES,
+  updateLocalConfig,
+  type AppConfigSchema,
+} from "@/consts/app-config";
+import i18n from "@/i18n/config";
 
 const updateTheme = (theme: AppConfigSchema["theme"]) => {
   const root = window.document.documentElement;
@@ -55,6 +40,7 @@ const derivedLanguageAtom = atom(
     const prevConfig = get(appConfigAtom);
     if (language !== prevConfig.language) {
       const newConfig = { ...prevConfig, language };
+      i18n.changeLanguage(language.toLocaleLowerCase());
       updateLocalConfig(newConfig);
       set(appConfigAtom, newConfig);
     }

@@ -38,16 +38,16 @@ describe("UserInfo", () => {
     const themeButton = screen.getByTestId("user-info__button__theme");
     await act(() => user.hover(themeButton));
     await waitFor(() => {
-      expect(screen.getByText("light")).toBeTruthy();
+      expect(screen.getByText("Light")).toBeTruthy();
     });
     fireEvent.click(themeButton);
     await act(() => user.hover(themeButton));
     await waitFor(() => {
-      expect(screen.getByText("dark")).toBeTruthy();
+      expect(screen.getByText("Dark")).toBeTruthy();
     });
     fireEvent.click(themeButton);
     await waitFor(() => {
-      expect(screen.getByText("system")).toBeTruthy();
+      expect(screen.getByText("System")).toBeTruthy();
     });
   });
 });
