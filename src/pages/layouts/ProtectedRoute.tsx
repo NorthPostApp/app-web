@@ -31,7 +31,7 @@ export default function ProtectedRoute() {
         const userData = await authenticateUser(idToken);
         setUserAtomData(userData);
         setAuthenticated(true);
-        toast.message(`${t("toast.signIn.success")} ${userData.displayName}`);
+        toast.message(`${t("toast.signIn.success", { name: userData.displayName })}`);
       } catch (error) {
         handleAuthenticationError(error);
         setUserAtomData(null);

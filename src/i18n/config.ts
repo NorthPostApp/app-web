@@ -14,7 +14,7 @@ i18n
     }),
   )
   .init({
-    lng: initialLanguage.toLocaleLowerCase(),
+    lng: initialLanguage.toLowerCase(),
     fallbackLng: "en",
     debug: import.meta.env.MODE === "development",
     interpolation: {

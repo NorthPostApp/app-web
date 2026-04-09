@@ -40,7 +40,7 @@ const derivedLanguageAtom = atom(
     const prevConfig = get(appConfigAtom);
     if (language !== prevConfig.language) {
       const newConfig = { ...prevConfig, language };
-      i18n.changeLanguage(language.toLocaleLowerCase());
+      i18n.changeLanguage(language.toLowerCase());
       updateLocalConfig(newConfig);
       set(appConfigAtom, newConfig);
     }

@@ -18,7 +18,7 @@
   },
   "toast": {
     "signIn": {
-      "success": "Welcome back"
+      "success": "Welcome back {{name}}"
     }
   }
 }
