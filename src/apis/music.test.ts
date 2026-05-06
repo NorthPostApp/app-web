@@ -1,12 +1,42 @@
 import { http, HttpResponse } from "msw";
-import { mockReturnedURL, musicList } from "./__mocks__/musicHandlers";
 import { getMusicList, getPresignedMusicURL } from "./music";
 import { BASE_URL } from "./shared";
-import { server } from "@/lib/server";
+import type { MusicListSchema, MusicURLSchema } from "@/schemas/music";
+import { setupServer } from "msw/node";
 
-describe("api/music", () => {
+const mockReturnedURL: MusicURLSchema = "example.com/music.mp3";
+const musicList: MusicListSchema = [
+  {
+    filename: "trackA.mp3",
+    genre: "pop",
+    title: "Track",
+    durationSec: 180,
+    size: 1024,
+    lastModified: 1000,
+  },
+  {
+    filename: "trackB.mp3",
+    genre: "pop",
+    title: "Track",
+    durationSec: 180,
+    size: 1024,
+    lastModified: 1000,
+  },
+];
+
+const server = setupServer();
+beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+describe("user/music", () => {
   describe("getMusicList", () => {
     it("success", async () => {
+      server.use(
+        http.get(`${BASE_URL}music/list`, () => {
+          return HttpResponse.json({ data: musicList });
+        }),
+      );
       const result = await getMusicList("token", new AbortController().signal);
       expect(result).toEqual(musicList);
     });
@@ -36,6 +66,11 @@ describe("api/music", () => {
 
   describe("getPresignedMusicURL", () => {
     it("success", async () => {
+      server.use(
+        http.get(`${BASE_URL}music/:genre/:track`, () => {
+          return HttpResponse.json({ data: mockReturnedURL });
+        }),
+      );
       const filename = "foo/bar.mp3";
       const result = await getPresignedMusicURL(
         "token",

@@ -1,14 +1,8 @@
 import "@testing-library/jest-dom";
-import { afterAll, afterEach, beforeAll } from "vitest";
-import { server } from "@/lib/server";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { Provider, type createStore } from "jotai";
-
-beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
 
 // Mock window api
 Object.defineProperty(window, "matchMedia", {

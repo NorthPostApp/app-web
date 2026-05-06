@@ -20,7 +20,7 @@
 }
 
 .address-book {
-  @apply relative flex w-200 h-100 p-4;
+  @apply relative flex w-200 h-180 p-4;
 }
 
 .address-book__bg {

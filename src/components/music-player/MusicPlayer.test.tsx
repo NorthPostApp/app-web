@@ -3,7 +3,25 @@ import MusicPlayer from "./MusicPlayer";
 import type { MusicListSchema } from "@/schemas/music";
 import { createStore } from "jotai";
 import { currentSongIndexAtom, musicListAtom } from "@/atoms/musicAtoms";
-import { musicList } from "@/apis/__mocks__/musicHandlers";
+
+const musicList: MusicListSchema = [
+  {
+    filename: "trackA.mp3",
+    genre: "pop",
+    title: "Track",
+    durationSec: 180,
+    size: 1024,
+    lastModified: 1000,
+  },
+  {
+    filename: "trackB.mp3",
+    genre: "pop",
+    title: "Track",
+    durationSec: 180,
+    size: 1024,
+    lastModified: 1000,
+  },
+];
 
 const makeStore = (initialList?: MusicListSchema, initialIndex: number = 0) => {
   const store = createStore();
