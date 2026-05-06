@@ -6,7 +6,9 @@ const MODIFIER_KEY_PREFIX = navigator.platform.startsWith("Mac") ? "⌘" : "Ctrl
 const SUPPORTED_LANGUAGES = ["ZH", "EN"] as const;
 const DEFAULT_LANGUAGE = "EN";
 
-const LANGUAGES_LIST: { label: string; value: (typeof SUPPORTED_LANGUAGES)[number] }[] = [
+type Language = (typeof SUPPORTED_LANGUAGES)[number];
+
+const LANGUAGES_LIST: { label: string; value: Language }[] = [
   { label: "中文", value: "ZH" },
   { label: "English", value: "EN" },
 ] as const;
@@ -57,4 +59,4 @@ export {
   updateLocalConfig,
 };
 
-export type { AppConfigSchema };
+export type { Language, AppConfigSchema };

@@ -1,5 +1,5 @@
 import SavedTab from "./tabs/SavedTab";
-import SearchTab from "./tabs/SearchTab";
+import SearchTab from "./tabs/search/SearchTab";
 import RequestTab from "./tabs/RequestTab";
 
 const addressBookTabs: string[] = ["saved", "search", "request"];
