@@ -9,36 +9,35 @@
 .light,
 .light-theme {
   --accent-1: #fbfdfe;
-  --accent-2: #f5fafb;
-  --accent-3: #eaf3f7;
-  --accent-4: #deecf2;
-  --accent-5: #d2e4eb;
-  --accent-6: #c4dae3;
-  --accent-7: #b1ccd8;
-  --accent-8: #93b8c8;
-  /* Main accent */
-  --accent-9: #527989;
-  --accent-10: #456c7b;
-  --accent-11: #476e7d;
-  --accent-12: #1d3038;
+  --accent-2: #f5f9fd;
+  --accent-3: #e7f3fd;
+  --accent-4: #d9ecfb;
+  --accent-5: #cae2f5;
+  --accent-6: #b8d5ed;
+  --accent-7: #a0c4e1;
+  --accent-8: #7cadd3;
+  --accent-9: #679ac1;
+  --accent-10: #5b8eb4;
+  --accent-11: #417398;
+  --accent-12: #253a49;
 
   --accent-a1: #0080c004;
-  --accent-a2: #0080990a;
-  --accent-a3: #006e9e15;
-  --accent-a4: #006d9b21;
-  --accent-a5: #00668e2d;
-  --accent-a6: #0160863b;
-  --accent-a7: #0059804e;
-  --accent-a8: #00587e6c;
-  --accent-a9: #003a51ad;
-  --accent-a10: #00364aba;
-  --accent-a11: #00364bb8;
-  --accent-a12: #00161fe2;
+  --accent-a2: #0066cc0a;
+  --accent-a3: #0080ea18;
+  --accent-a4: #0080e526;
+  --accent-a5: #0074cf35;
+  --accent-a6: #0069bf47;
+  --accent-a7: #0061af5f;
+  --accent-a8: #0060aa83;
+  --accent-a9: #00569798;
+  --accent-a10: #00508ba4;
+  --accent-a11: #004375be;
+  --accent-a12: #00192ada;
 
   --accent-contrast: #fff;
-  --accent-surface: #f3f9facc;
-  --accent-indicator: #527989;
-  --accent-track: #527989;
+  --accent-surface: #f3f8fdcc;
+  --accent-indicator: #679ac1;
+  --accent-track: #679ac1;
 }
 
 @supports (color: color(display-p3 1 1 1)) {
@@ -46,36 +45,36 @@
     :root,
     .light,
     .light-theme {
-      --accent-1: oklch(99.2% 0.0026 225.6);
-      --accent-2: oklch(98.1% 0.0049 225.6);
-      --accent-3: oklch(95.8% 0.0114 225.6);
-      --accent-4: oklch(93.4% 0.0168 225.6);
-      --accent-5: oklch(90.6% 0.0218 225.6);
-      --accent-6: oklch(87.4% 0.0271 225.6);
-      --accent-7: oklch(83% 0.0338 225.6);
-      --accent-8: oklch(76.2% 0.0455 225.6);
-      --accent-9: oklch(55.3% 0.0502 225.6);
-      --accent-10: oklch(50.7% 0.0502 225.6);
-      --accent-11: oklch(51.4% 0.0502 225.6);
-      --accent-12: oklch(29.6% 0.0286 225.6);
+      --accent-1: oklch(99.2% 0.003 242.3);
+      --accent-2: oklch(98% 0.0066 242.3);
+      --accent-3: oklch(95.9% 0.0184 242.3);
+      --accent-4: oklch(93.3% 0.0284 242.3);
+      --accent-5: oklch(90.1% 0.0371 242.3);
+      --accent-6: oklch(86% 0.0456 242.3);
+      --accent-7: oklch(80.5% 0.0564 242.3);
+      --accent-8: oklch(72.8% 0.0759 242.3);
+      --accent-9: oklch(66.5% 0.0798 242.3);
+      --accent-10: oklch(62.6% 0.0798 242.3);
+      --accent-11: oklch(53.7% 0.0798 242.3);
+      --accent-12: oklch(33.7% 0.038 242.3);
 
       --accent-a1: color(display-p3 0.0235 0.5137 0.7569 / 0.016);
-      --accent-a2: color(display-p3 0.0235 0.4588 0.5647 / 0.036);
-      --accent-a3: color(display-p3 0.0078 0.3725 0.5294 / 0.075);
-      --accent-a4: color(display-p3 0.0039 0.3686 0.5373 / 0.118);
-      --accent-a5: color(display-p3 0.0039 0.3373 0.502 / 0.165);
-      --accent-a6: color(display-p3 0.0039 0.3137 0.4745 / 0.216);
-      --accent-a7: color(display-p3 0.0039 0.2902 0.4549 / 0.287);
-      --accent-a8: color(display-p3 0.0039 0.2902 0.4392 / 0.397);
-      --accent-a9: color(display-p3 0 0.1843 0.2745 / 0.648);
-      --accent-a10: color(display-p3 0 0.1647 0.2431 / 0.695);
-      --accent-a11: color(display-p3 0 0.1647 0.2471 / 0.687);
-      --accent-a12: color(display-p3 0 0.0627 0.098 / 0.871);
+      --accent-a2: color(display-p3 0.0235 0.349 0.7843 / 0.036);
+      --accent-a3: color(display-p3 0.0118 0.4627 0.8667 / 0.087);
+      --accent-a4: color(display-p3 0.0078 0.4157 0.8275 / 0.134);
+      --accent-a5: color(display-p3 0.0078 0.3804 0.7529 / 0.189);
+      --accent-a6: color(display-p3 0.0039 0.3412 0.6941 / 0.255);
+      --accent-a7: color(display-p3 0.0039 0.3216 0.6275 / 0.346);
+      --accent-a8: color(display-p3 0.0039 0.3176 0.6039 / 0.475);
+      --accent-a9: color(display-p3 0 0.2784 0.5333 / 0.553);
+      --accent-a10: color(display-p3 0 0.2549 0.4902 / 0.6);
+      --accent-a11: color(display-p3 0 0.2078 0.4039 / 0.699);
+      --accent-a12: color(display-p3 0 0.0706 0.1412 / 0.836);
 
       --accent-contrast: #fff;
-      --accent-surface: color(display-p3 0.9569 0.9725 0.9804 / 0.8);
-      --accent-indicator: oklch(55.3% 0.0502 225.6);
-      --accent-track: oklch(55.3% 0.0502 225.6);
+      --accent-surface: color(display-p3 0.9529 0.9725 0.9843 / 0.8);
+      --accent-indicator: oklch(66.5% 0.0798 242.3);
+      --accent-track: oklch(66.5% 0.0798 242.3);
     }
   }
 }

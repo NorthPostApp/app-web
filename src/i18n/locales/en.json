@@ -17,6 +17,13 @@
     },
     "search": {
       "placeholder": "Search by name or feature"
+    },
+    "tags": {
+      "country": "Country",
+      "figure": "Figure",
+      "role": "Role",
+      "add": "+ Add Tags",
+      "limit": "You can select up to 10 tags"
     }
   },
   "toast": {
