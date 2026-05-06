@@ -1,6 +1,6 @@
 import { useState } from "react";
 import cn from "@/lib/cn";
-import TabContent from "@/components/address-book/tabs/TabContent";
+import TabContent from "@/components/address-book/TabContent";
 import {
   addressBookTabs,
   getTabContent,

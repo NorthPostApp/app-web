@@ -1,6 +1,8 @@
 import { atom } from "jotai";
 
-// Filters
+// Search
+const keywordsAtom = atom<string>("");
+
 const selectedTagsAtom = atom<string[]>([]);
 const derivedSetTagsAtom = atom(null, (get, set, tag: string) => {
   const currTags = get(selectedTagsAtom);
@@ -14,4 +16,4 @@ const derivedSetTagsAtom = atom(null, (get, set, tag: string) => {
   }
 });
 
-export { selectedTagsAtom, derivedSetTagsAtom };
+export { keywordsAtom, selectedTagsAtom, derivedSetTagsAtom };
