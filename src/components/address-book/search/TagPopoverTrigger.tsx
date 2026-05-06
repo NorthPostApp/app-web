@@ -8,7 +8,7 @@ export default function TagPopoverTrigger() {
   const { t } = useTranslation();
   return (
     <div className="w-full text-sm rounded-full py-0.5 hover:underline">
-      {selectedTags.length <= MAX_NUM_TAGS
+      {selectedTags.length < MAX_NUM_TAGS
         ? t("addressBook.tags.add")
         : t("addressBook.tags.limit")}
     </div>

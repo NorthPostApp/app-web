@@ -13,9 +13,9 @@ export default function TagChip({ text, active, disabled = false }: TagChipProps
   return (
     <div
       className={cn(
-        "text-[13px] px-2.5 py-0.2 rounded-full hover:cursor-pointer",
+        "text-[13px] px-2.5 py-0.5 rounded-full hover:cursor-pointer",
         active
-          ? "ring-none bg-(--gray-11) text-(--color-background)"
+          ? "ring-0 bg-(--gray-11) text-(--color-background)"
           : "ring ring-(--gray-7) bg-(--color-background)",
         disabled ? "opacity-35 hover:cursor-default" : "",
       )}

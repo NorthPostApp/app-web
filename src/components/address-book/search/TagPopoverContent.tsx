@@ -29,7 +29,7 @@ export default function TagPopoverContent() {
                   text={tag}
                   active={selectedTagsSet.has(tag)}
                   disabled={
-                    !selectedTagsSet.has(tag) && selectedTags.length > MAX_NUM_TAGS
+                    !selectedTagsSet.has(tag) && selectedTags.length >= MAX_NUM_TAGS
                   }
                 />
               ))}
