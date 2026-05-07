@@ -13,7 +13,7 @@
 }
 
 .music-player__control__main {
-  @apply w-9 h-9 p-0 bg-(--gray-a9) rounded-full hover:bg-(--accent-9);
+  @apply w-9 h-9 p-0;
 }
 
 .music-player__control__main__icon {

@@ -4,13 +4,16 @@ type TabContentProps = {
   direction?: "rtl" | "ltr";
 } & PropsWithChildren;
 
+const styles = {
+  body: "w-full h-full",
+  slideLtr: "animate-[slide-in-ltr_0.3s_ease-in-out_forwards]",
+  slideRtl: "animate-[slide-in-rtl_0.3s_ease-in-out_forwards]",
+};
+
 export default function TabContent({ direction, children }: TabContentProps) {
   return (
     <div
-      className={cn(
-        "tab-content",
-        direction === "ltr" ? "tab-content__ltr" : "tab-content__rtl",
-      )}
+      className={cn(styles.body, direction === "ltr" ? styles.slideLtr : styles.slideRtl)}
     >
       {children}
     </div>

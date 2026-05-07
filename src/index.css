@@ -29,7 +29,6 @@
 }
 
 /* Standard styles */
-
 .text-sideway {
   writing-mode: sideways-lr;
 }
@@ -44,4 +43,23 @@
     100% 100%,
     17px 17px,
     17px 17px;
+}
+
+/* Animations */
+@keyframes slide-in-rtl {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-ltr {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }

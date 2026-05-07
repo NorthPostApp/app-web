@@ -83,6 +83,7 @@ export default function MusicPlayer() {
         </Button>
         <Button
           className="music-player__control__main"
+          variant="solid"
           onClick={playPauseMusic}
           data-testid="music-player__control__main"
         >

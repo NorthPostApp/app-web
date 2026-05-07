@@ -1,7 +1,7 @@
-import { selectedTagsAtom } from "@/atoms/addressAtoms";
 import { useAtomValue } from "jotai";
-import { MAX_NUM_TAGS } from "./consts";
 import { useTranslation } from "react-i18next";
+import { selectedTagsAtom } from "@/atoms/addressAtoms";
+import { MAX_NUM_TAGS } from "@/components/address-book/search/consts";
 
 export default function TagPopoverTrigger() {
   const selectedTags = useAtomValue(selectedTagsAtom);
