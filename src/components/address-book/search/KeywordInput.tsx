@@ -1,6 +1,6 @@
+import { useAtom } from "jotai";
 import { useTranslation } from "react-i18next";
 import { keywordsAtom } from "@/atoms/addressAtoms";
-import { useAtom } from "jotai";
 import Input from "@/components/ui/Input";
 
 export default function KeywordInput() {

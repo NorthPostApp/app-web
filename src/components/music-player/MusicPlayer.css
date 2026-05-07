@@ -12,16 +12,8 @@
   @apply flex items-center justify-center gap-2;
 }
 
-.music-player__control__main {
-  @apply w-9 h-9 p-0 bg-(--gray-a9) rounded-full hover:bg-(--accent-9);
-}
-
 .music-player__control__main__icon {
   @apply fill-(--color-background) stroke-0 mx-auto;
-}
-
-.music-player__control__side {
-  @apply w-7 h-7 p-0;
 }
 
 .music-player__control__side__icon {

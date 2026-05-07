@@ -82,7 +82,7 @@ export default function MusicPlayer() {
           <SkipBack size={20} className="music-player__control__side__icon" />
         </Button>
         <Button
-          className="music-player__control__main"
+          variant="solid"
           onClick={playPauseMusic}
           data-testid="music-player__control__main"
         >
@@ -90,7 +90,8 @@ export default function MusicPlayer() {
           {isPlaying && <Pause size={22} className="music-player__control__main__icon" />}
         </Button>
         <Button
-          className="music-player__control__side group"
+          className="group"
+          variant="light"
           onClick={playNextSong}
           data-testid="music-player__control__next"
         >

@@ -1,0 +1,6 @@
+{
+  "tailwindCSS.experimental.classRegex": [
+    // This looks for "const styles = { ... }" and enables autocomplete for the strings inside it
+    ["const styles\\s*=\\s*\\{([\\s\\S]*?)\\}", "['\"`]([^'\"`]*?)['\"`]"]
+  ]
+}
