@@ -2,24 +2,20 @@ import type { ComponentProps } from "react";
 import cn from "@/lib/cn";
 import { Button as BaseButton } from "@base-ui/react";
 
-type Variants = "solid" | "vice";
+type Variants = "solid" | "light";
 
 type ButtonProps = {
   active?: boolean;
   variant?: Variants;
 } & ComponentProps<typeof BaseButton>;
 
-const styles = {
-  solid: "bg-(--accent-a9) hover:bg-(--accent-11) rounded-full",
+const styles: Record<Variants, string> = {
+  solid: "w-9 h-9 p-0 bg-(--accent-a9) hover:bg-(--accent-11) rounded-full",
+  light: "w-7 h-7 p-0",
 };
 
 const getVariantStyle = (variant: Variants) => {
-  switch (variant) {
-    case "solid":
-      return styles.solid;
-    default:
-      return "";
-  }
+  return styles[variant] || "";
 };
 
 export default function Button({
