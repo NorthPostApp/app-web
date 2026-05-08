@@ -5,12 +5,13 @@ import { fireEvent, renderWithProviders, screen, waitFor } from "@/lib/test-util
 import UserInfo from "./UserInfo";
 import userEvent from "@testing-library/user-event";
 import { act } from "react";
+import type { Language } from "@/consts/app-config";
 
 vi.mock(import("@/components/user-info/UserSettingsPopover"), () => ({
   default: vi.fn(() => <button>user setting</button>),
 }));
 
-const makeStore = (language: "EN" | "ZH" = "EN") => {
+const makeStore = (language: Language = "en") => {
   const store = createStore();
   store.set(appConfigAtom, { language, theme: "light" });
   store.set(userAtom, {

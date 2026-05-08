@@ -17,12 +17,12 @@ const styles = {
 export default function TagPopoverContent() {
   const { t } = useTranslation();
   const { language } = useAtomValue(appConfigAtom);
-  const { data: tagsRecord } = useGetAllTagsQuery(language);
+  const { data: tagsRecord, isLoading } = useGetAllTagsQuery(language);
   const selectedTags = useAtomValue(selectedTagsAtom);
   const selectedTagsSet = useMemo(() => new Set(selectedTags), [selectedTags]);
-
   return (
     <div className={styles.body}>
+      {isLoading && <p className="text-sm">Loading</p>}
       {tagsRecord &&
         Object.entries(tagsRecord?.tags).map(([category, tags]) => (
           <div key={category} className={styles.category}>

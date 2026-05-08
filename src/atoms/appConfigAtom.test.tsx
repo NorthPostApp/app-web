@@ -29,7 +29,7 @@ describe("appConfigAtom", () => {
   it("load from default config", async () => {
     const MockComponent = await mockForLocalLoading();
     render(<MockComponent />);
-    expect(screen.getByText("EN")).toBeTruthy();
+    expect(screen.getByText("en")).toBeTruthy();
     expect(screen.getByText("light")).toBeTruthy();
   });
 
@@ -37,14 +37,14 @@ describe("appConfigAtom", () => {
     localStorage.setItem(
       LOCAL_STORAGE_KEY,
       JSON.stringify({
-        language: "ZH",
+        language: "zh",
         theme: "dark",
       }),
     );
     const store = createStore();
     const MockComponent = await mockForLocalLoading();
     renderWithProviders(<MockComponent />, store);
-    expect(screen.getByText("ZH")).toBeTruthy();
+    expect(screen.getByText("zh")).toBeTruthy();
     expect(screen.getByText("dark")).toBeTruthy();
   });
 });
