@@ -8,7 +8,7 @@ const tagsRecord: AddressTagRecordsSchema = {
   tags: {
     country: ["a", "b", "c"],
   },
-  language: "ZH",
+  language: "zh",
   refreshedAt: new Date().getTime(),
 };
 
@@ -21,11 +21,14 @@ describe("user/address", () => {
   describe("getAllTags", () => {
     it("success", async () => {
       server.use(
-        http.get(`${BASE_URL}address/tags?language=zh`, () => {
-          return HttpResponse.json({ data: tagsRecord });
+        http.get(`${BASE_URL}address/tags`, ({ request }) => {
+          const language = new URL(request.url).searchParams.get("language");
+          if (language === "zh") {
+            return HttpResponse.json({ data: tagsRecord });
+          }
         }),
       );
-      const result = await getAllTags("ZH", "123");
+      const result = await getAllTags("zh", "123");
       expect(result).toEqual(tagsRecord);
     });
 
@@ -35,7 +38,7 @@ describe("user/address", () => {
           return HttpResponse.json({ error: "unauthorized" }, { status: 401 });
         }),
       );
-      await expect(getAllTags("ZH", "token")).rejects.toThrow("unauthorized");
+      await expect(getAllTags("zh", "token")).rejects.toThrow("unauthorized");
     });
 
     it("failed with default message", async () => {
@@ -44,7 +47,7 @@ describe("user/address", () => {
           return HttpResponse.json({}, { status: 401 });
         }),
       );
-      await expect(getAllTags("ZH", "token")).rejects.toThrow(
+      await expect(getAllTags("zh", "token")).rejects.toThrow(
         "failed to get all tags: 401",
       );
     });

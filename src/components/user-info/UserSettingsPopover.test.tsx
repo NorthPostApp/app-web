@@ -3,8 +3,9 @@ import { fireEvent, renderWithProviders, screen, waitFor } from "@/lib/test-util
 import { createStore } from "jotai";
 import UserSettingsPopover from "./UserSettingsPopover";
 import userEvent from "@testing-library/user-event";
+import type { Language } from "@/consts/app-config";
 
-const makeStore = (language: "EN" | "ZH" = "EN") => {
+const makeStore = (language: Language = "en") => {
   const store = createStore();
   store.set(appConfigAtom, { language, theme: "light" });
   return store;
@@ -21,7 +22,7 @@ describe("UserSettingsPopover", () => {
   });
 
   it("renders the trigger icon button and show popover", () => {
-    renderWithProviders(<UserSettingsPopover iconSize={20} />, makeStore("EN"));
+    renderWithProviders(<UserSettingsPopover iconSize={20} />, makeStore("en"));
     const iconButton = screen.getByRole("button");
     expect(screen.queryByText("Settings")).not.toBeTruthy();
     expect(iconButton).toBeTruthy();
@@ -31,7 +32,7 @@ describe("UserSettingsPopover", () => {
 
   it("switch language", async () => {
     const user = userEvent.setup();
-    renderWithProviders(<UserSettingsPopover iconSize={20} />, makeStore("EN"));
+    renderWithProviders(<UserSettingsPopover iconSize={20} />, makeStore("en"));
     const iconButton = screen.getByRole("button");
     fireEvent.click(iconButton);
     const languageSelectButton = screen.getByText("English");

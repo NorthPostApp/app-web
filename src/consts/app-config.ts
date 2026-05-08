@@ -3,14 +3,14 @@ import * as z from "zod";
 const MODIFIER_KEY_PREFIX = navigator.platform.startsWith("Mac") ? "⌘" : "Ctrl";
 
 // App languages
-const SUPPORTED_LANGUAGES = ["ZH", "EN"] as const;
-const DEFAULT_LANGUAGE = "EN";
+const SUPPORTED_LANGUAGES = ["zh", "en"] as const;
+const DEFAULT_LANGUAGE = "en";
 
 type Language = (typeof SUPPORTED_LANGUAGES)[number];
 
 const LANGUAGES_LIST: { label: string; value: Language }[] = [
-  { label: "中文", value: "ZH" },
-  { label: "English", value: "EN" },
+  { label: "中文", value: "zh" },
+  { label: "English", value: "en" },
 ] as const;
 
 // Themes
