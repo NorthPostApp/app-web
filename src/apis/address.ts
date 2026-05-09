@@ -53,7 +53,7 @@ const getAddresses = async (
   });
   if (!response.ok) {
     const errorData = (await response.json()) as ServiceError;
-    const errorMessage = errorData.error || "failed to get addresses";
+    const errorMessage = errorData.error || `failed to get addresses ${response.status}`;
     throw new Error(errorMessage);
   }
   return GetAddressesResponse.parse((await response.json()).data);

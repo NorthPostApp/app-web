@@ -36,12 +36,6 @@ function TagChip({ text, activeStyle, disabled = false }: TagChipProps) {
   );
 }
 
-const MemoedTagChips = memo(TagChip, (prev, curr) => {
-  return (
-    prev.text === curr.text &&
-    prev.activeStyle === curr.activeStyle &&
-    prev.disabled === curr.disabled
-  );
-});
+const MemoedTagChips = memo(TagChip);
 
 export default MemoedTagChips;

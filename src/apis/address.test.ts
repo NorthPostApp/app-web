@@ -117,7 +117,7 @@ describe("user/address", () => {
     it("request aborted", async () => {
       server.use(
         http.post(`${BASE_URL}address`, async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          await new Promise((resolve) => setTimeout(resolve, 10));
           return HttpResponse.json({ data: mockResponse });
         }),
       );
