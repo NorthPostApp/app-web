@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useSetAtom } from "jotai";
 import cn from "@/lib/cn";
 import { derivedSetTagsAtom } from "@/atoms/addressAtoms";
@@ -15,7 +16,7 @@ const styles = {
   disabled: "opacity-35 hover:cursor-default",
 };
 
-export default function TagChip({ text, activeStyle, disabled = false }: TagChipProps) {
+function TagChip({ text, activeStyle, disabled = false }: TagChipProps) {
   const toggleTag = useSetAtom(derivedSetTagsAtom);
   return (
     <div
@@ -34,3 +35,13 @@ export default function TagChip({ text, activeStyle, disabled = false }: TagChip
     </div>
   );
 }
+
+const MemoedTagChips = memo(TagChip, (prev, curr) => {
+  return (
+    prev.text === curr.text &&
+    prev.activeStyle === curr.activeStyle &&
+    prev.disabled === curr.disabled
+  );
+});
+
+export default MemoedTagChips;

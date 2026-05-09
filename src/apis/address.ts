@@ -1,6 +1,7 @@
-import type { Language } from "@/consts/app-config";
+import { SUPPORTED_LANGUAGES, type Language } from "@/consts/app-config";
 import { BASE_URL, type ServiceError } from "./shared";
-import { AddressTagRecords } from "@/schemas/addresses";
+import { AddressItem, AddressTagRecords } from "@/schemas/addresses";
+import z from "zod";
 
 const getAllTags = async (language: Language, idToken: string, signal?: AbortSignal) => {
   const url = new URL(`address/tags?language=${language}`, BASE_URL);
@@ -19,4 +20,44 @@ const getAllTags = async (language: Language, idToken: string, signal?: AbortSig
   return AddressTagRecords.parse((await response.json()).data);
 };
 
-export { getAllTags };
+type GetAddressesRequest = {
+  language: Language;
+  keywords: string;
+  tags: string[];
+  pageSize: number;
+  page: number;
+};
+
+const GetAddressesResponse = z.object({
+  addresses: z.array(AddressItem),
+  totalCount: z.number(),
+  totalPages: z.number(),
+  page: z.number(),
+  language: z.enum(SUPPORTED_LANGUAGES),
+});
+
+const getAddresses = async (
+  requestBody: GetAddressesRequest,
+  idToken: string,
+  signal?: AbortSignal,
+) => {
+  const url = new URL(`address`, BASE_URL);
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${idToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+    signal,
+  });
+  if (!response.ok) {
+    const errorData = (await response.json()) as ServiceError;
+    const errorMessage = errorData.error || "failed to get addresses";
+    throw new Error(errorMessage);
+  }
+  return GetAddressesResponse.parse((await response.json()).data);
+};
+
+export { getAllTags, getAddresses, GetAddressesResponse };
+export type { GetAddressesRequest };

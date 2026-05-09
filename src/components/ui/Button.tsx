@@ -30,9 +30,9 @@ export default function Button({
       {...restProps}
       className={cn(
         "p-1 rounded-xl hover:cursor-pointer",
-        className,
         active ? "opacity-100" : "opacity-30",
         variant && getVariantStyle(variant),
+        className,
       )}
     >
       {children}
