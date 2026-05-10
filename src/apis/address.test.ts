@@ -124,7 +124,7 @@ describe("user/address", () => {
       const controller = new AbortController();
       const promise = getAddresses(request, "idToken", controller.signal);
       controller.abort();
-      expect(promise).rejects.toThrow();
+      await expect(promise).rejects.toThrow();
     });
   });
 });
