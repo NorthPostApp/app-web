@@ -3,13 +3,19 @@ import { fireEvent, renderWithProviders, screen } from "@/lib/test-utils";
 import { selectedTagsAtom } from "@/atoms/addressAtoms";
 import SearchTab from "./SearchTab";
 
+vi.mock("@/components/address-book/search/consts", async () => {
+  const mod = await vi.importActual("@/components/address-book/search/consts");
+  return {
+    ...mod,
+    MAX_NUM_TAGS: 4,
+  };
+});
+
 vi.mock("@/components/address-book/search/TagPopoverContent", () => ({
   default: vi.fn(() => <div>tag content</div>),
 }));
 
-vi.mock("@/components/address-book/search/consts", () => ({
-  MAX_NUM_TAGS: 4,
-}));
+vi.mock("@/lib/firebase", () => ({ auth: { currentUser: null } }));
 
 const makeStore = (selectedTags: string[] = []) => {
   const store = createStore();

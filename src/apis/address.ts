@@ -20,6 +20,7 @@ const getAllTags = async (language: Language, idToken: string, signal?: AbortSig
   return AddressTagRecords.parse((await response.json()).data);
 };
 
+// Search adddresses in database
 type GetAddressesRequest = {
   language: Language;
   keywords: string;
@@ -28,13 +29,15 @@ type GetAddressesRequest = {
   page: number;
 };
 
-const GetAddressesResponse = z.object({
+const GetAddressesResponseObject = z.object({
   addresses: z.array(AddressItem),
   totalCount: z.number(),
   totalPages: z.number(),
   page: z.number(),
   language: z.enum(SUPPORTED_LANGUAGES),
 });
+
+type GetAddressesResponse = z.infer<typeof GetAddressesResponseObject>;
 
 const getAddresses = async (
   requestBody: GetAddressesRequest,
@@ -56,8 +59,8 @@ const getAddresses = async (
     const errorMessage = errorData.error || `failed to get addresses ${response.status}`;
     throw new Error(errorMessage);
   }
-  return GetAddressesResponse.parse((await response.json()).data);
+  return GetAddressesResponseObject.parse((await response.json()).data);
 };
 
-export { getAllTags, getAddresses, GetAddressesResponse };
-export type { GetAddressesRequest };
+export { getAllTags, getAddresses, GetAddressesResponseObject };
+export type { GetAddressesRequest, GetAddressesResponse };
