@@ -53,4 +53,4 @@ const derivedLanguageAtom = atom(
   },
 );
 
-export { appConfigAtom, derivedThemeAtom, derivedLanguageAtom };
+export { appConfigAtom, derivedThemeAtom, derivedLanguageAtom, updateTheme };

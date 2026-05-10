@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { Provider, type createStore } from "jotai";
+import "@/i18n/config";
 
 // Mock window api
 Object.defineProperty(window, "matchMedia", {
