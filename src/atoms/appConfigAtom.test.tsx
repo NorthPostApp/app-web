@@ -25,13 +25,12 @@ const mockForLocalLoading = async () => {
 };
 
 const mockMatchMedia = (prefersDark: boolean) => {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: vi.fn().mockImplementation((query: string) => ({
-      matches: prefersDark,
-      media: query,
-    })),
-  });
+  vi.mocked(window.matchMedia).mockImplementation(
+    () =>
+      ({
+        matches: prefersDark,
+      }) as unknown as MediaQueryList,
+  );
 };
 
 describe("appConfigAtom", () => {
