@@ -21,7 +21,7 @@ const handleAuthenticationError = (error: unknown) => {
     errorInstance.message = error;
   }
   toast.error(errorInstance.message);
-  console.error(errorInstance);
+  // console.error(errorInstance);
 };
 
 // verify user data in database

@@ -53,9 +53,19 @@ export default function SearchTrigger() {
         if (isStale || isPending) refetch();
       }}
     >
-      {!isFetching && <Search size={18} className={styles.searchIcon} />}
+      {!isFetching && (
+        <Search
+          data-testid="address-book-search-search"
+          size={18}
+          className={styles.searchIcon}
+        />
+      )}
       {isFetching && (
-        <LoaderCircle size={16} className={cn(styles.searchIcon, "animate-spin")} />
+        <LoaderCircle
+          data-testid="address-book-search-loading"
+          size={16}
+          className={cn(styles.searchIcon, "animate-spin")}
+        />
       )}
     </Button>
   );
