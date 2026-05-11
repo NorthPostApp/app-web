@@ -32,7 +32,7 @@ describe("TagChip", () => {
   it("applies active styles when activeStyle is true", () => {
     renderWithProviders(<TagChip text="work" activeStyle={true} />, makeStore());
     const chip = screen.getByText("work");
-    expect(chip.className).toContain("bg-(--gray-11)");
+    expect(chip.className).toContain("bg-(--accent-9)");
   });
 
   it("applies inactive styles when activeStyle is false", () => {

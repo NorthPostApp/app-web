@@ -16,7 +16,8 @@
       "request": "添加请求"
     },
     "search": {
-      "placeholder": "通过名字或特征搜索"
+      "placeholder": "通过名字或特征搜索",
+      "noResult": "暂无结果"
     },
     "tags": {
       "country": "国家",

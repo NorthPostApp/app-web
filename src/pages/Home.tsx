@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex flex-col justify-center items-center gap-2">
       <AddressBook />
-      {/* <Editor /> */}
+      {/*<Editor />*/}
       <div className="flex w-full items-center justify-center gap-3">
         <UserInfo />
         <MusicPlayer />

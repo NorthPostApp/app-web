@@ -3,6 +3,13 @@ import { fireEvent, renderWithProviders, screen } from "@/lib/test-utils";
 import { selectedTagsAtom } from "@/atoms/addressAtoms";
 import SearchTab from "./SearchTab";
 
+// Mock resize observer
+globalThis.ResizeObserver = class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
+
 vi.mock("@/components/address-book/search/consts", async () => {
   const mod = await vi.importActual("@/components/address-book/search/consts");
   return {

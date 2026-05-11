@@ -1,12 +1,14 @@
+import cn from "@/lib/cn";
 import { Popover as BasePopover } from "@base-ui/react";
 import type { PropsWithChildren, ReactElement } from "react";
 
 type PopoverProps = {
   trigger: ReactElement;
   title?: string;
+  className?: string;
 } & PropsWithChildren;
 
-export default function Popover({ trigger, title, children }: PopoverProps) {
+export default function Popover({ trigger, title, children, className }: PopoverProps) {
   return (
     <BasePopover.Root>
       <BasePopover.Trigger className="group hover:cursor-pointer">
@@ -14,7 +16,12 @@ export default function Popover({ trigger, title, children }: PopoverProps) {
       </BasePopover.Trigger>
       <BasePopover.Portal>
         <BasePopover.Positioner sideOffset={9}>
-          <BasePopover.Popup className="flex flex-col items-center bg-(--color-background) border border-(--gray-6) px-3 py-2 rounded-xl gap-2">
+          <BasePopover.Popup
+            className={cn(
+              "flex flex-col items-center bg-(--color-background) border border-(--gray-6) px-3 py-2 rounded-xl gap-2",
+              className,
+            )}
+          >
             <BasePopover.Arrow className="-top-1.5">
               <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
                 <path

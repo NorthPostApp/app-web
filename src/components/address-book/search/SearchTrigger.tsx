@@ -29,9 +29,7 @@ export default function SearchTrigger() {
     isStale,
     isPending,
   } = useGetAddressesQuery(language, 1, keywords, tags);
-  if (!isFetching && !isError) {
-    setSearchResult(searchResult);
-  }
+
   // this effect ensures the error toast only pops out once after all retries
   useEffect(() => {
     if (isError) {
