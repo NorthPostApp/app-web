@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { useSetAtom } from "jotai";
+import clsx from "clsx";
 import cn from "@/lib/cn";
 import { derivedSetTagsAtom } from "@/atoms/addressAtoms";
 
@@ -10,10 +11,10 @@ type TagChipProps = {
 };
 
 const styles = {
-  body: "text-[13px] px-2.5 py-0.5 rounded-full hover:cursor-pointer",
-  active: "ring-0 bg-(--gray-11) text-(--color-background)",
-  inactive: "ring ring-(--gray-7) bg-(--color-background)",
-  disabled: "opacity-35 hover:cursor-default",
+  body: clsx("text-[13px] px-2.5 py-0.5 rounded-full hover:cursor-pointer"),
+  active: clsx("ring-0 bg-(--accent-9) text-(--color-background)"),
+  inactive: clsx("ring ring-(--gray-7) bg-(--color-background)"),
+  disabled: clsx("opacity-35 hover:cursor-default"),
 };
 
 function TagChip({ text, activeStyle, disabled = false }: TagChipProps) {

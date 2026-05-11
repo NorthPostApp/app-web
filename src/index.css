@@ -7,7 +7,7 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: var(--gray-11);
+  color: var(--gray-12);
   background-color: var(--color-background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -17,6 +17,9 @@
   --text-color: var(--gray-11);
   --base-shadow: 0px 3px 6px var(--gray-a5);
   --base-shadow-inset: 0px 1px 6px var(--gray-a5);
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-8) transparent;
 }
 
 ::selection {
