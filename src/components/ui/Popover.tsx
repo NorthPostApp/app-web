@@ -8,8 +8,7 @@ type PopoverProps = {
   className?: string;
 } & PropsWithChildren;
 
-export default function Popover({ trigger, title, children, ...props }: PopoverProps) {
-  const { className } = props;
+export default function Popover({ trigger, title, children, className }: PopoverProps) {
   return (
     <BasePopover.Root>
       <BasePopover.Trigger className="group hover:cursor-pointer">

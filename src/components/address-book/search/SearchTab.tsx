@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
 import clsx from "clsx";
 import cn from "@/lib/cn";
@@ -8,8 +9,7 @@ import TagPopoverContent from "@/components/address-book/search/TagPopoverConten
 import TagChip from "@/components/address-book/search/TagChip";
 import KeywordInput from "@/components/address-book/search/KeywordInput";
 import SearchTrigger from "@/components/address-book/search/SearchTrigger";
-import SearchResult from "./SearchResults";
-import { useRef } from "react";
+import SearchResult from "@/components/address-book/search/SearchResults";
 
 const styles = {
   outer: clsx("w-full h-full flex flex-col gap-3"),
@@ -23,12 +23,18 @@ const styles = {
 export default function SearchTab() {
   const selectedTags = useAtomValue(selectedTagsAtom);
   const overlayRef = useRef<HTMLDivElement>(null);
+  const scrollContainRef = useRef<HTMLDivElement>(null);
 
-  const onScroll = (e: React.UIEvent) => {
-    const div = e.currentTarget;
-    if (!overlayRef.current || div.scrollHeight === div.clientHeight) return; // avoid 0 division and disable gradient
+  const updateOverlay = useCallback(() => {
+    const divElement = scrollContainRef.current;
+    if (!overlayRef.current || !divElement) return;
+    const isScrollable = divElement.scrollHeight > divElement.clientHeight;
+    if (!isScrollable) {
+      overlayRef.current.style.background = "none";
+      return;
+    }
     const percentage = Math.round(
-      (div.scrollTop / (div.scrollHeight - div.clientHeight)) * 100,
+      (divElement.scrollTop / (divElement.scrollHeight - divElement.clientHeight)) * 100,
     );
     if (percentage === 0) {
       overlayRef.current.style.background =
@@ -40,7 +46,16 @@ export default function SearchTab() {
       overlayRef.current.style.background =
         "linear-gradient(var(--color-background) 0%, transparent 10%, transparent 90%, var(--color-background) 100%)";
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const divElement = scrollContainRef.current;
+    if (!divElement) return;
+    const observer = new ResizeObserver(updateOverlay);
+    observer.observe(divElement);
+    updateOverlay();
+    return () => observer.disconnect();
+  }, [updateOverlay]);
 
   return (
     <div className={styles.outer}>
@@ -66,7 +81,7 @@ export default function SearchTab() {
       </div>
       {/* Search results */}
       <div className={styles.resultsContainer}>
-        <SearchResult onScroll={onScroll} />
+        <SearchResult ref={scrollContainRef} onScroll={updateOverlay} />
         <div ref={overlayRef} className={styles.scrollOverlay} inert />
       </div>
     </div>

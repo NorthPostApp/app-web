@@ -1,28 +1,37 @@
-import { addressSearchResultsAtom } from "@/atoms/addressAtoms";
+import clsx from "clsx";
 import { useAtomValue } from "jotai";
-import AddressCard from "./AddressCard";
-import type React from "react";
+import { useTranslation } from "react-i18next";
+import { addressSearchResultsAtom } from "@/atoms/addressAtoms";
+import AddressCard from "@/components/address-book/search/AddressCard";
 
-type SearchResultProps = {
-  onScroll: (e: React.UIEvent<HTMLDivElement>) => void;
+const styles = {
+  container: clsx("max-h-full overflow-auto"),
+  emptyState: clsx("w-full text-center text-(--gray-8)"),
+  grid: clsx("grid grid-cols-2 gap-3 py-2"),
 };
 
-export default function SearchResult({ onScroll }: SearchResultProps) {
+type SearchResultProps = {
+  onScroll: () => void;
+} & React.ComponentProps<"div">;
+
+export default function SearchResult({ onScroll, ref }: SearchResultProps) {
+  const { t } = useTranslation();
   const searchResult = useAtomValue(addressSearchResultsAtom);
-  if (!searchResult || searchResult.totalCount === 0) {
-    return (
-      <div className="w-full text-center text-(--gray-8)">
-        <p>No result available</p>
-      </div>
-    );
-  }
+  const showCards = searchResult && searchResult.totalCount !== 0;
   return (
-    <div className="max-h-full overflow-auto" onScroll={onScroll}>
-      <div className="grid grid-cols-2 gap-3 py-2">
-        {searchResult.addresses.map((result) => (
-          <AddressCard addressItem={result} key={result.id} />
-        ))}
-      </div>
+    <div ref={ref} className={styles.container} onScroll={onScroll}>
+      {!showCards && (
+        <div className={styles.emptyState}>
+          <p>{t("addressBook.search.noResult")}</p>
+        </div>
+      )}
+      {showCards && (
+        <div className={styles.grid}>
+          {searchResult.addresses.map((result) => (
+            <AddressCard addressItem={result} key={result.id} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

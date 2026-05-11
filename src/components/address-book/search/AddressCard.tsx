@@ -17,8 +17,8 @@ const styles = {
 const parseAddress = (address: AddressSchema) => {
   return {
     buildingName: address.buildingName,
-    addressLine: `${address.line1} ${address.line2}`,
-    city: `${address.city} ${address.region}`,
+    addressLine: [address.line1, address.line2].filter(Boolean).join(" "),
+    city: [address.city, address.region].filter(Boolean).join(" "),
     country: address.country,
   };
 };

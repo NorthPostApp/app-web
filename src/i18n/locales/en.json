@@ -16,7 +16,8 @@
       "request": "Request"
     },
     "search": {
-      "placeholder": "Search by name or feature"
+      "placeholder": "Search by name or feature",
+      "noResult": "No result available"
     },
     "tags": {
       "country": "Country",
