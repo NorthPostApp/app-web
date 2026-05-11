@@ -38,6 +38,13 @@ export default function SearchTrigger() {
       toast.error("failed to get result");
     }
   }, [isError]);
+  // this effect help update fetch data in the atom
+  useEffect(() => {
+    if (searchResult) {
+      setSearchResult(searchResult);
+    }
+  }, [searchResult, setSearchResult]);
+
   return (
     <Button
       variant="solid"
