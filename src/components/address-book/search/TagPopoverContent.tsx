@@ -6,9 +6,11 @@ import { selectedTagsAtom } from "@/atoms/addressAtoms";
 import { useGetAllTagsQuery } from "@/hooks/queries/useGetAllTagsQuery";
 import { MAX_NUM_TAGS } from "@/components/address-book/search/consts";
 import TagChip from "@/components/address-book/search/TagChip";
+import { LoaderCircle } from "lucide-react";
 
 const styles = {
   body: "max-w-100 flex flex-col",
+  loading: "p-2 flex gap-2 items-center justify-center",
   category: "py-3 first:pt-0 last:pb-2",
   categoryHeader:
     "pb-1 mb-3 border-b border-dashed border-(--gray-7) text-sm font-medium",
@@ -22,7 +24,12 @@ export default function TagPopoverContent() {
   const selectedTagsSet = useMemo(() => new Set(selectedTags), [selectedTags]);
   return (
     <div className={styles.body}>
-      {isLoading && <p className="text-sm">Loading</p>}
+      {isLoading && (
+        <div className={styles.loading}>
+          <LoaderCircle size={16} className="animate-spin" />
+          <p className="text-sm">{t("addressBook.tags.loading")}</p>
+        </div>
+      )}
       {tagsRecord &&
         Object.entries(tagsRecord?.tags).map(([category, tags]) => (
           <div key={category} className={styles.category}>

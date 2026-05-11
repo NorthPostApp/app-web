@@ -23,7 +23,8 @@
       "figure": "Figure",
       "role": "Role",
       "add": "+ Add Tags",
-      "limit": "You can select up to 10 tags"
+      "limit": "You can select up to {{num}} tags",
+      "loading": "Loading"
     }
   },
   "toast": {

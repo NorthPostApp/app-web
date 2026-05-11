@@ -1,3 +1,4 @@
+import type { GetAddressesResponse } from "@/apis/address";
 import { atom } from "jotai";
 
 // Search
@@ -16,4 +17,7 @@ const derivedSetTagsAtom = atom(null, (get, set, tag: string) => {
   }
 });
 
-export { keywordsAtom, selectedTagsAtom, derivedSetTagsAtom };
+// Results
+const addressSearchResultsAtom = atom<GetAddressesResponse | undefined>(undefined);
+
+export { keywordsAtom, selectedTagsAtom, derivedSetTagsAtom, addressSearchResultsAtom };

@@ -10,7 +10,7 @@ export default function TagPopoverTrigger() {
     <div className="w-full text-sm rounded-full py-0.5 hover:underline">
       {selectedTags.length < MAX_NUM_TAGS
         ? t("addressBook.tags.add")
-        : t("addressBook.tags.limit")}
+        : t("addressBook.tags.limit", { num: MAX_NUM_TAGS })}
     </div>
   );
 }

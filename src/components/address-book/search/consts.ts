@@ -1,3 +1,5 @@
 const MAX_NUM_TAGS = 10;
+const DEFAULT_PAGE_SIZE = 20;
+const MAX_PAGE_SIZE = 100;
 
-export { MAX_NUM_TAGS };
+export { MAX_NUM_TAGS, DEFAULT_PAGE_SIZE, MAX_PAGE_SIZE };
