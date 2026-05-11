@@ -9,7 +9,7 @@ import TagPopoverContent from "@/components/address-book/search/TagPopoverConten
 import TagChip from "@/components/address-book/search/TagChip";
 import KeywordInput from "@/components/address-book/search/KeywordInput";
 import SearchTrigger from "@/components/address-book/search/SearchTrigger";
-import SearchResult from "@/components/address-book/search/SearchResults";
+import SearchResults from "@/components/address-book/search/SearchResults";
 
 const styles = {
   outer: clsx("w-full h-full flex flex-col gap-3"),
@@ -81,7 +81,7 @@ export default function SearchTab() {
       </div>
       {/* Search results */}
       <div className={styles.resultsContainer}>
-        <SearchResult ref={scrollContainRef} onScroll={updateOverlay} />
+        <SearchResults ref={scrollContainRef} onScroll={updateOverlay} />
         <div ref={overlayRef} className={styles.scrollOverlay} inert />
       </div>
     </div>

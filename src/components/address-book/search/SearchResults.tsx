@@ -14,7 +14,7 @@ type SearchResultProps = {
   onScroll: () => void;
 } & React.ComponentProps<"div">;
 
-export default function SearchResult({ onScroll, ref }: SearchResultProps) {
+export default function SearchResults({ onScroll, ref }: SearchResultProps) {
   const { t } = useTranslation();
   const searchResult = useAtomValue(addressSearchResultsAtom);
   const showCards = searchResult && searchResult.totalCount !== 0;
