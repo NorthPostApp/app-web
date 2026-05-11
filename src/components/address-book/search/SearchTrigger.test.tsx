@@ -1,4 +1,4 @@
-import { fireEvent, renderWithProviders, screen, waitFor } from "@/lib/test-utils";
+import { fireEvent, renderWithProviders, screen } from "@/lib/test-utils";
 import SearchTrigger from "./SearchTrigger";
 import { createStore } from "jotai";
 import { useGetAddressesQuery } from "@/hooks/queries/useGetAddressesQuery";
