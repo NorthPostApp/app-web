@@ -121,7 +121,7 @@ describe("utility functions", () => {
     expect(mockSignOut).toHaveBeenCalled();
   });
 
-  it("getUsetIdToken", async () => {
+  it("getUserIdToken", async () => {
     await expect(getUserIdToken()).resolves.toBe("mockIdToken");
   });
 });
