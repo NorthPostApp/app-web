@@ -16,6 +16,8 @@ const styles = {
   keywordSection: clsx("w-full flex gap-3 items-center justify-between"),
   tagsSection: clsx("w-full flex flex-col gap-2 bg-(--gray-3) rounded-2xl"),
   selectedTags: clsx("flex flex-wrap gap-1.5"),
+  resultsContainer: clsx("flex-1 relative overflow-hidden"),
+  scrollOverlay: clsx("absolute top-0 left-0 w-full h-full"),
 };
 
 export default function SearchTab() {
@@ -63,9 +65,9 @@ export default function SearchTab() {
         </Popover>
       </div>
       {/* Search results */}
-      <div className="flex-1 relative overflow-hidden">
+      <div className={styles.resultsContainer}>
         <SearchResult onScroll={onScroll} />
-        <div ref={overlayRef} className="absolute top-0 left-0 w-full h-full" inert />
+        <div ref={overlayRef} className={styles.scrollOverlay} inert />
       </div>
     </div>
   );
