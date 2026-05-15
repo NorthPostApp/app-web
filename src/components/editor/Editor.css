@@ -26,28 +26,6 @@
   @apply text-sm text-(--gray-9) flex justify-center items-center gap-1;
 }
 
-.editor-container {
-  @apply relative flex flex-col items-start gap-4 w-200 my-5 mx-auto p-6;
-}
-
-.editor-inner {
-  @apply relative rounded-2xl p-2 shadow w-full h-180 overflow-y-auto border-dashed border border-(--accent-a6);
-}
-
-.editor-decoration {
-  @apply absolute left-0 top-0 w-full h-full rounded-4xl shadow-(--base-shadow);
-}
-
-.editor-placeholder {
-  @apply absolute top-2 left-2 select-none text-gray-400 overflow-hidden;
-  text-overflow: ellipsis;
-}
-
-.editor-input {
-  @apply relative resize-none text-base h-full caret-slate-400 outline-none overflow-y-auto;
-  tab-size: 4;
-}
-
 .editor-input::-webkit-scrollbar {
   width: 10px;
 }

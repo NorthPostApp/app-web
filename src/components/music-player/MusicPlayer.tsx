@@ -8,7 +8,19 @@ import { useMusicPlayer } from "@/hooks/useMusicPlayer";
 import { useGetMusicURLQuery } from "@/hooks/queries/useGetMusicURLQuery";
 import Button from "@/components/ui/Button";
 import MusicSlider from "@/components/music-player/MusicSlider";
-import "./MusicPlayer.css";
+import clsx from "clsx";
+
+const styles = {
+  body: clsx(
+    "w-96 h-30 py-4 px-5 rounded-3xl shadow-(--base-shadow) flex flex-col justify-between items-center gap-2 bg-(--color-background)",
+  ),
+  state: clsx("w-full flex flex-col items-center text-sm"),
+  control: clsx("flex items-center justify-center gap-2"),
+  controlMainIcon: clsx("fill-(--color-background) stroke-0 mx-auto"),
+  controlSideIcon: clsx(
+    "fill-(--gray-8) stroke-(--gray-8) group-hover:fill-(--accent-9) group-hover:stroke-(--accent-9) mx-auto",
+  ),
+};
 
 export default function MusicPlayer() {
   const [musicList, setMusicList] = useAtom(musicListAtom);
@@ -64,8 +76,8 @@ export default function MusicPlayer() {
   }, [currentMusicItem, fetchMusicURL]);
 
   return (
-    <div className="music-player">
-      <div className="music-player__state">
+    <div className={styles.body}>
+      <div className={styles.state}>
         <p>{currentMusicItem?.title}</p>
         <MusicSlider
           seek={seek}
@@ -73,21 +85,21 @@ export default function MusicPlayer() {
           durationInSec={durationInSec}
         />
       </div>
-      <div className="music-player__control">
+      <div className={styles.control}>
         <Button
-          className="music-player__control__side group"
+          className="group"
           onClick={playPrevSong}
           data-testid="music-player__control__previous"
         >
-          <SkipBack size={20} className="music-player__control__side__icon" />
+          <SkipBack size={20} className={styles.controlSideIcon} />
         </Button>
         <Button
           variant="solid"
           onClick={playPauseMusic}
           data-testid="music-player__control__main"
         >
-          {!isPlaying && <Play size={22} className="music-player__control__main__icon" />}
-          {isPlaying && <Pause size={22} className="music-player__control__main__icon" />}
+          {!isPlaying && <Play size={22} className={styles.controlMainIcon} />}
+          {isPlaying && <Pause size={22} className={styles.controlMainIcon} />}
         </Button>
         <Button
           className="group"
@@ -95,7 +107,7 @@ export default function MusicPlayer() {
           onClick={playNextSong}
           data-testid="music-player__control__next"
         >
-          <SkipForward size={20} className="music-player__control__side__icon" />
+          <SkipForward size={20} className={styles.controlSideIcon} />
         </Button>
       </div>
     </div>
