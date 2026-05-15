@@ -8,9 +8,19 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { appConfigAtom, derivedLanguageAtom } from "@/atoms/appConfigAtom";
 import type { AppConfigSchema } from "@/consts/app-config";
 import { useTranslation } from "react-i18next";
+import clsx from "clsx";
 
 type UserSettingsPopoverProps = {
   iconSize: number;
+};
+
+const styles = {
+  icon: clsx(
+    "group-hover:stroke-(--accent-8) stroke-(--gray-8) mx-2 stroke-[1.5px] group-hover:stroke-2",
+  ),
+  popover: clsx("text-sm flex flex-col justify-center gap-3"),
+  section: clsx("flex gap-3 justify-between items-center"),
+  logOutButton: clsx("bg-(--gray-a3)"),
 };
 
 export default function UserSettingsPopover({ iconSize = 20 }: UserSettingsPopoverProps) {
@@ -20,10 +30,10 @@ export default function UserSettingsPopover({ iconSize = 20 }: UserSettingsPopov
   return (
     <Popover
       title={t("settings.title")}
-      trigger={<CircleUser size={iconSize} className="user-info__body__svg" />}
+      trigger={<CircleUser size={iconSize} className={styles.icon} />}
     >
-      <div className="user-info__settings__popover">
-        <div className="user-info__settings__popover__section">
+      <div className={styles.popover}>
+        <div className={styles.section}>
           <p>{t("settings.language")}</p>
           <Select
             items={LANGUAGES_LIST}
@@ -35,7 +45,7 @@ export default function UserSettingsPopover({ iconSize = 20 }: UserSettingsPopov
             size="sm"
           />
         </div>
-        <Button className="bg-(--gray-a3)" onClick={signOut}>
+        <Button className={styles.logOutButton} onClick={signOut}>
           {t("settings.logOut")}
         </Button>
       </div>

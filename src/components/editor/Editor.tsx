@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { HeadingNode } from "@lexical/rich-text";
 import { ListNode, ListItemNode } from "@lexical/list";
 import { LexicalComposer, type InitialConfigType } from "@lexical/react/LexicalComposer";
@@ -15,6 +16,22 @@ import "./Editor.css";
 
 const placeholder = "Begin your letter here...";
 
+const styles = {
+  container: clsx("relative flex flex-col items-start gap-4 w-200 my-5 mx-auto p-6"),
+  decoration: clsx(
+    "bg-grid absolute left-0 top-0 w-full h-full rounded-4xl shadow-(--base-shadow)",
+  ),
+  inner: clsx(
+    "relative rounded-2xl p-4 pr-2 shadow w-full h-180 overflow-y-auto border-dashed border-2 border-(--accent-6)",
+  ),
+  input: clsx(
+    "editor-input relative resize-none text-base h-full caret-slate-400 outline-none overflow-y-auto tab-4",
+  ),
+  placeholder: clsx(
+    "absolute top-4 left-4 select-none text-gray-400 overflow-hidden text-ellipsis",
+  ),
+};
+
 const onError = (error: Error) => {
   console.error(error);
 };
@@ -29,15 +46,15 @@ export default function Editor() {
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
-      <div className="editor-container">
-        <div className="editor-decoration bg-grid"></div>
-        <div className="editor-inner">
+      <div className={styles.container}>
+        <div className={`${styles.decoration} bg-grid`}></div>
+        <div className={styles.inner}>
           <RichTextPlugin
             contentEditable={
               <ContentEditable
-                className="editor-input"
+                className={styles.input}
                 aria-placeholder={"Enter some text"}
-                placeholder={<div className="editor-placeholder">{placeholder}</div>}
+                placeholder={<div className={styles.placeholder}>{placeholder}</div>}
               />
             }
             ErrorBoundary={LexicalErrorBoundary}
