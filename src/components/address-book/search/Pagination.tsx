@@ -4,20 +4,25 @@ import { useAtom, useAtomValue } from "jotai";
 import cn from "@/lib/cn";
 import { useEffect } from "react";
 import clsx from "clsx";
+import { Loader } from "lucide-react";
 
 const styles = {
   body: clsx("w-full"),
   outer: clsx("relative mx-auto transform h-9 py-1 w-42 overflow-hidden"),
   inner: clsx("absolute top-0 left-0 flex"),
   buttonBase: clsx(
-    "w-7 h-7 mx-1 border text-base rounded-xl p-0 shadow transition-colors duration-100",
+    "w-7 h-7 mx-1 border text-base rounded-xl p-0 shadow transition-colors duration-100 flex justify-center items-center",
   ),
   buttonActive: clsx("bg-(--accent-8) border-0 text-(--color-background) font-medium"),
   buttonInactive: clsx("border-(--gray-9) text-(--gray-10)"),
   overlay: clsx("absolute top-0 left-0 w-full h-full pointer-events-none"),
 };
 
-export default function Pagination() {
+type PaginationProps = {
+  isLoading?: boolean;
+};
+
+export default function Pagination({ isLoading }: PaginationProps) {
   const [currPage, setCurrPage] = useAtom(currPageAtom);
   const addressSearchResult = useAtomValue(addressSearchResultsAtom);
   const currShift = `${-currPage * 36 + 84 - 16}px`; // - (page * (button + 2 * margin) + half width - (button / 2 + margin))
@@ -54,12 +59,20 @@ export default function Pagination() {
                 key={`pagination-${index}`}
                 onClick={() => setCurrPage(index)}
                 active={index === currPage}
+                disabled={isLoading}
                 className={cn(
                   styles.buttonBase,
                   index === currPage ? styles.buttonActive : styles.buttonInactive,
                 )}
               >
-                {value}
+                {isLoading && index === currPage ? (
+                  <Loader
+                    className="animate-spin stroke-(--color-background)"
+                    size={14}
+                  />
+                ) : (
+                  value
+                )}
               </Button>
             ),
           )}

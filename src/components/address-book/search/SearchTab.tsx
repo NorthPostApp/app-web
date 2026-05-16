@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import clsx from "clsx";
 import cn from "@/lib/cn";
 import { selectedTagsAtom } from "@/atoms/addressAtoms";
+import { useGetAddresses } from "@/hooks/useGetAddresses";
 import Popover from "@/components/ui/Popover";
 import TagPopoverTrigger from "@/components/address-book/search/TagPopoverTrigger";
 import TagPopoverContent from "@/components/address-book/search/TagPopoverContent";
@@ -25,6 +26,7 @@ export default function SearchTab() {
   const selectedTags = useAtomValue(selectedTagsAtom);
   const overlayRef = useRef<HTMLDivElement>(null);
   const scrollContainRef = useRef<HTMLDivElement>(null);
+  const { isFetching, triggerSearch } = useGetAddresses();
 
   const updateOverlay = useCallback(() => {
     const divElement = scrollContainRef.current;
@@ -63,7 +65,7 @@ export default function SearchTab() {
       {/* Text input */}
       <div className={styles.keywordSection}>
         <KeywordInput />
-        <SearchTrigger />
+        <SearchTrigger isFetching={isFetching} onClick={triggerSearch} />
       </div>
       {/* Tag Chips */}
       <div
@@ -86,7 +88,7 @@ export default function SearchTab() {
         <div ref={overlayRef} className={styles.scrollOverlay} inert />
       </div>
       {/* Pagination */}
-      <Pagination />
+      <Pagination isLoading={isFetching} />
     </div>
   );
 }
