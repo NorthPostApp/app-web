@@ -9,7 +9,7 @@ import {
 import clsx from "clsx";
 
 const styles = {
-  body: clsx("relative flex w-200 h-180 p-4"),
+  body: clsx("relative flex w-200 h-220 p-4"),
   background: clsx(
     "bg-grid -z-10 absolute left-0 top-0 w-full h-full rounded-4xl shadow-(--base-shadow)",
   ),

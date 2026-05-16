@@ -10,6 +10,7 @@ import TagChip from "@/components/address-book/search/TagChip";
 import KeywordInput from "@/components/address-book/search/KeywordInput";
 import SearchTrigger from "@/components/address-book/search/SearchTrigger";
 import SearchResults from "@/components/address-book/search/SearchResults";
+import Pagination from "@/components/address-book/search/Pagination";
 
 const styles = {
   outer: clsx("w-full h-full flex flex-col gap-3"),
@@ -84,6 +85,8 @@ export default function SearchTab() {
         <SearchResults ref={scrollContainRef} onScroll={updateOverlay} />
         <div ref={overlayRef} className={styles.scrollOverlay} inert />
       </div>
+      {/* Pagination */}
+      <Pagination />
     </div>
   );
 }

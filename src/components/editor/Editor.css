@@ -1,8 +1,8 @@
 @import "../../index.css";
 
 .toolbar {
-  @apply relative flex gap-3 py-2 bg-(--gray-2) px-3 rounded-full justify-center items-center shadow-(--base-shadow);
-  background: linear-gradient(to bottom, var(--gray-1), var(--gray-2));
+  @apply relative flex gap-3 py-2 px-3 rounded-full justify-center items-center shadow-(--base-shadow);
+  background: linear-gradient(to bottom, var(--color-background), var(--gray-2));
 }
 .toolbar::before {
   content: "";

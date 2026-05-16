@@ -1,6 +1,8 @@
+import { lazy } from "react";
 import SavedTab from "./SavedTab";
-import SearchTab from "./search/SearchTab";
 import RequestTab from "./RequestTab";
+
+const SearchTab = lazy(() => import("@/components/address-book/search/SearchTab"));
 
 const addressBookTabs: string[] = ["saved", "search", "request"];
 

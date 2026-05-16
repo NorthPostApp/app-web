@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { addressSearchResultsAtom } from "@/atoms/addressAtoms";
-import AddressCard from "@/components/address-book/search/AddressCard";
+import AddressCard from "@/components/address-book/AddressCard";
 
 const styles = {
   container: clsx("max-h-full overflow-auto"),
@@ -19,7 +19,12 @@ export default function SearchResults({ onScroll, ref }: SearchResultProps) {
   const searchResult = useAtomValue(addressSearchResultsAtom);
   const showCards = searchResult && searchResult.totalCount !== 0;
   return (
-    <div ref={ref} className={styles.container} onScroll={onScroll}>
+    <div
+      ref={ref}
+      className={styles.container}
+      data-testid="scroll-container"
+      onScroll={onScroll}
+    >
       {!showCards && (
         <div className={styles.emptyState}>
           <p>{t("addressBook.search.noResult")}</p>

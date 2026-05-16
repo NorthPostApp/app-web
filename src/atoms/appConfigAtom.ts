@@ -6,7 +6,7 @@ import {
   type AppConfigSchema,
 } from "@/consts/app-config";
 import i18n from "@/i18n/config";
-import { keywordsAtom, selectedTagsAtom } from "./addressAtoms";
+import { currPageAtom, keywordsAtom, selectedTagsAtom } from "./addressAtoms";
 
 const updateTheme = (theme: AppConfigSchema["theme"]) => {
   const root = window.document.documentElement;
@@ -47,8 +47,10 @@ const derivedLanguageAtom = atom(
       // clear the search address content
       const selectedTags = get(selectedTagsAtom);
       const addressSearchKeywords = get(keywordsAtom);
+      const currSearchResultPage = get(currPageAtom);
       if (selectedTags.length !== 0) set(selectedTagsAtom, []);
       if (addressSearchKeywords.length !== 0) set(keywordsAtom, "");
+      if (currSearchResultPage !== 0) set(currPageAtom, 0);
     }
   },
 );
