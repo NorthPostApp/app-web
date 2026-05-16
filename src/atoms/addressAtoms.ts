@@ -4,6 +4,8 @@ import { atom } from "jotai";
 // Search
 const keywordsAtom = atom<string>("");
 
+const currPageAtom = atom<number>(0);
+
 const selectedTagsAtom = atom<string[]>([]);
 const derivedSetTagsAtom = atom(null, (get, set, tag: string) => {
   const currTags = get(selectedTagsAtom);
@@ -20,4 +22,10 @@ const derivedSetTagsAtom = atom(null, (get, set, tag: string) => {
 // Results
 const addressSearchResultsAtom = atom<GetAddressesResponse | undefined>(undefined);
 
-export { keywordsAtom, selectedTagsAtom, derivedSetTagsAtom, addressSearchResultsAtom };
+export {
+  keywordsAtom,
+  currPageAtom,
+  selectedTagsAtom,
+  derivedSetTagsAtom,
+  addressSearchResultsAtom,
+};
