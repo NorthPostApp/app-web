@@ -23,8 +23,8 @@ export default function TooltipButton({
           <Tooltip.Popup className="flex items-center bg-(--color-background) border border-(--gray-4) px-3 h-8 rounded-xl">
             <Tooltip.Arrow
               className={cn(
-                side === "top" && "rotate-180 top-7",
-                side === "bottom" && "-top-1.5",
+                "data-[side=top]:rotate-180 data-[side=top]:top-7",
+                "data-[side=bottom]:-top-1.5",
               )}
             >
               <svg width="20" height="10" viewBox="0 0 20 10" fill="none">

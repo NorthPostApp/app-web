@@ -11,7 +11,7 @@ const validateKeywords = (keywords: string | undefined) => {
   return keywords ? keywords : "";
 };
 const validateTags = (tags: string[] | undefined) => {
-  return tags ? tags.sort() : [];
+  return tags ? [...tags].sort() : [];
 };
 const validatePageSize = (pageSize: number | undefined) => {
   if (!pageSize) return DEFAULT_PAGE_SIZE;
