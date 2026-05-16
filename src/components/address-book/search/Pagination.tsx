@@ -33,6 +33,10 @@ export default function Pagination() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressSearchResult?.totalPages]);
 
+  const numPages = addressSearchResult?.totalPages || 0;
+  const shouldRender = numPages !== 0 || addressSearchResult?.totalCount;
+  if (!shouldRender) return <></>; // if no result, does not render pagination bar
+
   return (
     <div className={styles.body}>
       <div className={styles.outer}>
@@ -44,22 +48,21 @@ export default function Pagination() {
             transitionProperty: "transform",
           }}
         >
-          {Array.from(
-            { length: addressSearchResult?.totalPages || 1 },
-            (_, value) => value + 1,
-          ).map((value, index) => (
-            <Button
-              key={`pagination-${index}`}
-              onClick={() => setCurrPage(index)}
-              active={index === currPage}
-              className={cn(
-                styles.buttonBase,
-                index === currPage ? styles.buttonActive : styles.buttonInactive,
-              )}
-            >
-              {value}
-            </Button>
-          ))}
+          {Array.from({ length: numPages }, (_, value) => value + 1).map(
+            (value, index) => (
+              <Button
+                key={`pagination-${index}`}
+                onClick={() => setCurrPage(index)}
+                active={index === currPage}
+                className={cn(
+                  styles.buttonBase,
+                  index === currPage ? styles.buttonActive : styles.buttonInactive,
+                )}
+              >
+                {value}
+              </Button>
+            ),
+          )}
         </div>
         <div
           className={styles.overlay}

@@ -19,6 +19,14 @@ const mockSearchResult2: GetAddressesResponse = {
   addresses: mockAddressItems,
   totalPages: 2,
   page: 1,
+  totalCount: 10,
+  language: "en",
+};
+
+const mockSearchResult3: GetAddressesResponse = {
+  addresses: mockAddressItems,
+  totalPages: 2,
+  page: 0,
   totalCount: 0,
   language: "en",
 };
@@ -46,5 +54,18 @@ describe("Pagination", () => {
     store.set(addressSearchResultsAtom, mockSearchResult2);
     renderWithProviders(<Pagination />, store);
     expect(store.get(currPageAtom)).toBe(1);
+  });
+
+  it("does not render pagination bar when no result available", () => {
+    const store = createStore();
+    renderWithProviders(<Pagination />, store);
+    expect(screen.queryAllByRole("div")).toHaveLength(0);
+  });
+
+  it("does not render pagination bar when total count is 0", () => {
+    const store = createStore();
+    store.set(addressSearchResultsAtom, mockSearchResult3);
+    renderWithProviders(<Pagination />, store);
+    expect(screen.queryAllByRole("div")).toHaveLength(0);
   });
 });
