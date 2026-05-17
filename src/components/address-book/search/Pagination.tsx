@@ -1,10 +1,10 @@
-import { addressSearchResultsAtom, currPageAtom } from "@/atoms/addressAtoms";
-import Button from "@/components/ui/Button";
 import { useAtom, useAtomValue } from "jotai";
-import cn from "@/lib/cn";
 import { useEffect } from "react";
 import clsx from "clsx";
-import { Loader } from "lucide-react";
+import cn from "@/lib/cn";
+import { addressSearchResultsAtom, currPageAtom } from "@/atoms/addressAtoms";
+import Spinner from "@/components/ui/Spinner";
+import Button from "@/components/ui/Button";
 
 const styles = {
   body: clsx("w-full"),
@@ -65,14 +65,7 @@ export default function Pagination({ isLoading }: PaginationProps) {
                   index === currPage ? styles.buttonActive : styles.buttonInactive,
                 )}
               >
-                {isLoading && index === currPage ? (
-                  <Loader
-                    className="animate-spin stroke-(--color-background)"
-                    size={14}
-                  />
-                ) : (
-                  value
-                )}
+                {isLoading && index === currPage ? <Spinner variant="sm" /> : value}
               </Button>
             ),
           )}

@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { useTranslation } from "react-i18next";
 import { addressSearchResultsAtom } from "@/atoms/addressAtoms";
 import AddressCard from "@/components/address-book/AddressCard";
+import { useUpdateAddressBookMutation } from "@/hooks/mutations/useUpdateAddressBookMutation";
 
 const styles = {
   container: clsx("max-h-full overflow-auto"),
@@ -18,6 +19,7 @@ export default function SearchResults({ onScroll, ref }: SearchResultProps) {
   const { t } = useTranslation();
   const searchResult = useAtomValue(addressSearchResultsAtom);
   const showCards = searchResult && searchResult.totalCount !== 0;
+  const { mutate, isPending } = useUpdateAddressBookMutation();
   return (
     <div
       ref={ref}
@@ -33,7 +35,13 @@ export default function SearchResults({ onScroll, ref }: SearchResultProps) {
       {showCards && (
         <div className={styles.grid}>
           {searchResult.addresses.map((result) => (
-            <AddressCard addressItem={result} key={result.id} />
+            <AddressCard
+              addressItem={result}
+              key={result.id}
+              actionType="add"
+              onClick={() => mutate({ ids: result.id, action: "add" })}
+              loading={isPending}
+            />
           ))}
         </div>
       )}

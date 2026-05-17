@@ -1,10 +1,16 @@
+import { memo } from "react";
 import clsx from "clsx";
+import cn from "@/lib/cn";
+import type { UpdateAction } from "@/apis/user";
 import type { AddressItemSchema, AddressSchema } from "@/schemas/addresses";
 import Button from "@/components/ui/Button";
-import { memo } from "react";
+import Spinner from "@/components/ui/Spinner";
 
 type AddressCardProps = {
   addressItem: AddressItemSchema;
+  actionType?: UpdateAction;
+  onClick?: () => void;
+  loading?: boolean;
 };
 
 const styles = {
@@ -17,8 +23,10 @@ const styles = {
   tagList: clsx("flex gap-1.5"),
   tag: clsx("text-xs px-2 py-0 rounded-full ring ring-(--gray-7)"),
   floatButton: clsx(
-    "shadow-(--base-shadow) font-medium absolute text-2xl text-(--color-background) right-0 bottom-0 w-11 h-11 rounded-none rounded-tl-2xl  bg-(--accent-8) translate-x-20 translate-y-20 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-200 hover:cursor-pointer",
+    "shadow-(--base-shadow) font-medium absolute text-2xl text-(--color-background) right-0 bottom-0 w-11 h-11 rounded-none rounded-tl-2xl bg-(--accent-8) translate-x-20 translate-y-20 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-200 hover:cursor-pointer",
   ),
+  addColor: clsx("bg-(--accent-8)"),
+  removeColor: clsx("bg-rose-400"),
 };
 
 const parseAddress = (address: AddressSchema) => {
@@ -26,11 +34,10 @@ const parseAddress = (address: AddressSchema) => {
     buildingName: address.buildingName,
     addressLine: [address.line1, address.line2].filter(Boolean).join(" "),
     location: [address.city, address.region, address.country].filter(Boolean).join(", "),
-    // country: address.country,
   };
 };
 
-function AddressCard({ addressItem }: AddressCardProps) {
+function AddressCard({ addressItem, actionType, onClick, loading }: AddressCardProps) {
   const parsedAddress = parseAddress(addressItem.address);
   return (
     <div className={styles.card}>
@@ -48,13 +55,31 @@ function AddressCard({ addressItem }: AddressCardProps) {
           </div>
         ))}
       </div>
-      <Button className={styles.floatButton}>+</Button>
+      {actionType && (
+        <Button
+          className={cn(
+            styles.floatButton,
+            actionType === "add" && styles.addColor,
+            actionType === "remove" && styles.removeColor,
+          )}
+          onClick={onClick}
+        >
+          {loading && <Spinner />}
+          {!loading && (actionType === "add" ? "+" : "-")}
+        </Button>
+      )}
     </div>
   );
 }
 
 const MemoAddressCard = memo(AddressCard, (oldProps, newProps) => {
-  return oldProps.addressItem.id === newProps.addressItem.id;
+  const { addressItem: item, actionType, loading } = newProps;
+  const {
+    addressItem: oldItem,
+    actionType: oldActionType,
+    loading: oldLoading,
+  } = oldProps;
+  return item.id === oldItem.id && actionType === oldActionType && loading === oldLoading;
 });
 
 export default MemoAddressCard;
