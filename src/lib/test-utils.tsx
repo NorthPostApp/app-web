@@ -27,6 +27,20 @@ const renderWithProviders = (
   );
 };
 
+const createHookTestWrapper = (store?: ReturnType<typeof createStore>) => {
+  const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false } },
+  });
+  const Wrapper = ({ children }: { children: ReactNode }) => {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>{children}</Provider>
+      </QueryClientProvider>
+    );
+  };
+  return Wrapper;
+};
+
 // eslint-disable-next-line react-refresh/only-export-components
 export * from "@testing-library/react";
-export { renderWithProviders };
+export { renderWithProviders, createHookTestWrapper };

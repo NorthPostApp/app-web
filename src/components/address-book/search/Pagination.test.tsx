@@ -68,4 +68,11 @@ describe("Pagination", () => {
     renderWithProviders(<Pagination />, store);
     expect(screen.queryAllByRole("div")).toHaveLength(0);
   });
+
+  it("current page is loading", () => {
+    const store = createStore();
+    store.set(addressSearchResultsAtom, mockSearchResult2);
+    renderWithProviders(<Pagination isLoading />, store);
+    expect(screen.getByTestId("ui-spinner")).toBeTruthy();
+  });
 });

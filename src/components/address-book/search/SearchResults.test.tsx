@@ -5,6 +5,13 @@ import { addressSearchResultsAtom } from "@/atoms/addressAtoms";
 import type { GetAddressesResponse } from "@/apis/address";
 
 const mockOnScroll = vi.fn();
+const mockUseUpdateAddressBookMutation = vi.fn();
+const mockMutate = vi.fn();
+
+vi.mock("@/hooks/mutations/useUpdateAddressBookMutation", () => ({
+  useUpdateAddressBookMutation: () => mockUseUpdateAddressBookMutation(),
+}));
+
 const mockSearchResult: GetAddressesResponse = {
   addresses: [
     {
@@ -51,6 +58,10 @@ const mockSearchResult: GetAddressesResponse = {
 describe("SearchResults", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockUseUpdateAddressBookMutation.mockReturnValue({
+      mutate: mockMutate,
+      isPending: false,
+    });
   });
   it("without search result", () => {
     renderWithProviders(<SearchResults onScroll={mockOnScroll} />);
