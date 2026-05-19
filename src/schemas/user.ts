@@ -1,4 +1,5 @@
 import * as z from "zod";
+import { AddressBookSchema } from "./address-book";
 
 const UserData = z.object({
   displayName: z.string(),
@@ -14,6 +15,7 @@ const UserData = z.object({
     .array(z.string())
     .nullish()
     .transform((v) => v ?? []),
+  addressBook: AddressBookSchema.optional(),
 });
 
 const GetUserDataResponse = z.object({

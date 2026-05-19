@@ -1,13 +1,13 @@
 import { memo } from "react";
 import clsx from "clsx";
 import cn from "@/lib/cn";
-import type { UpdateAction } from "@/apis/user";
-import type { AddressItemSchema, AddressSchema } from "@/schemas/addresses";
+import type { UpdateAction } from "@/apis/address-book";
+import type { AddressItem, Address } from "@/schemas/addresses";
 import Button from "@/components/ui/Button";
 import Spinner from "@/components/ui/Spinner";
 
 type AddressCardProps = {
-  addressItem: AddressItemSchema;
+  addressItem: AddressItem;
   actionType?: UpdateAction;
   onClick?: () => void;
   loading?: boolean;
@@ -29,7 +29,7 @@ const styles = {
   removeColor: clsx("bg-rose-400"),
 };
 
-const parseAddress = (address: AddressSchema) => {
+const parseAddress = (address: Address) => {
   return {
     buildingName: address.buildingName,
     addressLine: [address.line1, address.line2].filter(Boolean).join(" "),

@@ -1,6 +1,6 @@
 import { SUPPORTED_LANGUAGES, type Language } from "@/consts/app-config";
 import { BASE_URL, type ServiceError } from "./shared";
-import { AddressItem, AddressTagRecords } from "@/schemas/addresses";
+import { AddressItemSchema, AddressTagRecords } from "@/schemas/addresses";
 import z from "zod";
 
 const getAllTags = async (language: Language, idToken: string, signal?: AbortSignal) => {
@@ -20,7 +20,7 @@ const getAllTags = async (language: Language, idToken: string, signal?: AbortSig
   return AddressTagRecords.parse((await response.json()).data);
 };
 
-// Search adddresses in database
+// Search addresses in database
 type GetAddressesRequest = {
   language: Language;
   keywords: string;
@@ -30,7 +30,7 @@ type GetAddressesRequest = {
 };
 
 const GetAddressesResponseObject = z.object({
-  addresses: z.array(AddressItem),
+  addresses: z.array(AddressItemSchema),
   totalCount: z.number(),
   totalPages: z.number(),
   page: z.number(),
