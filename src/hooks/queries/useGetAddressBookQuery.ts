@@ -7,7 +7,7 @@ import { useAtomValue } from "jotai";
 export function useGetAddressBookQuery() {
   const { language } = useAtomValue(appConfigAtom);
   const query = useQuery({
-    queryKey: [language],
+    queryKey: ["address-book", "saved", language],
     queryFn: async ({ signal }) => {
       const userIdToken = (await getUserIdToken()) || "";
       return getAddressBook(userIdToken, language, signal);
