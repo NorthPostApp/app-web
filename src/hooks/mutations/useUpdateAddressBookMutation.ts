@@ -7,7 +7,7 @@ import {
   updateAddressBook,
   type UpdateAction,
   type UpdateAddressBookRequest,
-} from "@/apis/user";
+} from "@/apis/address-book";
 import { appConfigAtom } from "@/atoms/appConfigAtom";
 
 export function useUpdateAddressBookMutation(updateFn?: (ids: string[]) => void) {

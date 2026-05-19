@@ -8,7 +8,7 @@ const AddressTagRecords = z.object({
 });
 type AddressTagRecordsSchema = z.infer<typeof AddressTagRecords>;
 
-const Address = z.object({
+const AddressSchema = z.object({
   city: z.string(),
   country: z.string(),
   line1: z.string(),
@@ -17,18 +17,18 @@ const Address = z.object({
   postalCode: z.string().default(""),
   region: z.string(),
 });
-type AddressSchema = z.infer<typeof Address>;
+type Address = z.infer<typeof AddressSchema>;
 
-const AddressItem = z.object({
+const AddressItemSchema = z.object({
   id: z.string(),
   name: z.string(),
   briefIntro: z.string(),
   createdAt: z.number(),
   updatedAt: z.number(),
   tags: z.array(z.string()),
-  address: Address,
+  address: AddressSchema,
 });
-type AddressItemSchema = z.infer<typeof AddressItem>;
+type AddressItem = z.infer<typeof AddressItemSchema>;
 
-export { AddressTagRecords, Address, AddressItem };
-export type { AddressTagRecordsSchema, AddressSchema, AddressItemSchema };
+export { AddressTagRecords, AddressSchema, AddressItemSchema };
+export type { AddressTagRecordsSchema, Address, AddressItem };

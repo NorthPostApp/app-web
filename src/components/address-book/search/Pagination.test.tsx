@@ -3,9 +3,9 @@ import Pagination from "./Pagination";
 import type { GetAddressesResponse } from "@/apis/address";
 import { createStore } from "jotai";
 import { addressSearchResultsAtom, currPageAtom } from "@/atoms/addressAtoms";
-import type { AddressItemSchema } from "@/schemas/addresses";
+import type { AddressItem } from "@/schemas/addresses";
 
-const mockAddressItems: AddressItemSchema[] = [];
+const mockAddressItems: AddressItem[] = [];
 
 const mockSearchResult1: GetAddressesResponse = {
   addresses: mockAddressItems,

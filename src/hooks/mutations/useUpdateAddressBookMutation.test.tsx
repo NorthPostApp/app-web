@@ -14,7 +14,7 @@ vi.mock("@/apis/auth", () => ({
   getUserIdToken: mockGetUserIdToken,
 }));
 
-vi.mock("@/apis/user", () => ({
+vi.mock("@/apis/address-book", () => ({
   updateAddressBook: mockUpdateAddressBook,
 }));
 
